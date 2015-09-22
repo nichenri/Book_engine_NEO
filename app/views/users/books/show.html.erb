@@ -42,14 +42,7 @@
         <% @stocks.each do |stock| %>
           <li>
             <%= sprintf("%08d", stock.id) %>
-            <% if stock.borrowing %>
-              貸出し中
-              <% else if stock.stock_reservation %>
-                取り置き中 
-              <% else %>
-                在庫あり
-              <% end %>
-            <% end %>
+            <%= status(stock) %>
           <% end %>
 
           <% user_borrowing_count = 0 %>
@@ -58,7 +51,7 @@
           <% stock_count = 0 %>
           <% empty_stock = 0 %>
 
-          <% funcs_stocks.each do |stock| %>
+          <% @stocks.each do |stock| %>
             <% if stock.borrowing_user == current_user %>
               <% user_borrowing_count += 1 %>
               <% empty_stock = stock %>
@@ -85,7 +78,7 @@
           <% if user_borrowing_count == 1 %>
             返却期限:
             <% else if user_stock_reservation_count == 1 %>
-              取り置き有効期限:<%= empty_stock.stock_reservation.invalid_at %>
+              取り置き有効期限:<%= empty_stock.stock_reservation.invalid_at.to_date %>
             <%= link_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, empty_stock.id, empty_stock.stock_reservation.id), method: :delete, data: {confirm: "Are you sure??"} %>
             <% else if user_book_reservation_count == 1 %>
               <%= link_to "予約取り消し", users_book_book_reservation_path(@book.id), method: :delete, data: {confirm: "Are you sure??"} %>
@@ -100,6 +93,7 @@
                 <% end %>
               <% end %>
             <% end %>
+          <% end %>
           <% end %>
           </li>
       </ul>

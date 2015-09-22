@@ -9,10 +9,9 @@ class Users::BooksController < Users::ApplicationController
     @bookmarks = @book.bookmarks.where(params[:id])
     @user_bookmark = @bookmarks.find_by(user_id: current_user.id)
     @book_reservation = BookReservation.new
+    @stock_reservation = StockReservation.new
     @bookmark = Bookmark.new
     @review = Review.new
-    @user_stock_reservations = StockReservation.where(user_id: current_user.id)
-    @user_book_reservations = BookReservation.where(user_id: current_user.id)
   end
 
   private
