@@ -1,0 +1,15 @@
+<h2> 著者名の編集 </h2>
+
+<p><%= link_to "著者一覧へ戻る", admins_authors_path %></p>
+<br>
+<%= form_for @author, url: admins_publisher_path do |f| %>
+  <p>
+  <%= f.label :新しい著者名 %><br>
+  <%= f.text_field :author_name %>
+  </p>
+
+  <p>
+  <%= f.submit :著者名の編集 %>
+  </p>
+
+<% end %>

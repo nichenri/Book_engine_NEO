@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  new_book_id: 
+  status_name: MyString
+  arrive_at: 2015-09-18
+
+two:
+  user_id: 
+  new_book_id: 
+  status_name: MyString
+  arrive_at: 2015-09-18

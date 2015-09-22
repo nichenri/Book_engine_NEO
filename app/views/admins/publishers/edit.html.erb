@@ -1,0 +1,15 @@
+<h2> 出版社名の編集 </h2>
+
+<p><%= link_to "出版社一覧へ戻る", admins_publishers_path %></p>
+<br>
+<%= form_for @publisher, url: admins_publisher_path do |f| %>
+  <p>
+  <%= f.label :新しい出版社名 %><br>
+  <%= f.text_field :publisher_name %>
+  </p>
+
+  <p>
+  <%= f.submit :出版社名の編集 %>
+  </p>
+
+<% end %>

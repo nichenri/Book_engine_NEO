@@ -1,0 +1,15 @@
+<h1> レビューの編集 </h1>
+
+<p><%= link_to "本の詳細へ戻る", users_book_path(@book.id) %></p>
+<br>
+<%= form_for @review, :url => users_book_review_path do |f| %>
+  <p>
+  <%= f.label :レビューを更新してください %><br>
+  <%= f.text_area :content %>
+  </p>
+
+  <p>
+  <%= f.submit :レビューの編集 %>
+  </p>
+
+<% end %>

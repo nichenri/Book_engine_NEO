@@ -1,0 +1,34 @@
+<h2>ブックマークした本一覧</h2>
+<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
+
+<%= search_form_for @bookmark_search, url: admins_bookmarks_path do |f| %>
+  <div class="field">
+    <%= f.label :user_name_cont, "ユーザ名" %>
+    <%= f.text_field :user_name_cont %><br>
+    <%= f.label :book_title_cont, "図書名" %>
+    <%= f.text_field :book_title_cont %><br>
+  </div>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+
+<table rules="all">
+    <thead>
+      <tr>
+        <th>ユーザ</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bookmarks.each do |bookmark| %>
+      <tr>
+        <td><%= bookmark.user.name %></td>
+        <td><%= bookmark.book.title %></td>
+        <td><%= bookmark.book.author.author_name %></td>
+        <td><%= bookmark.book.publisher.publisher_name %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

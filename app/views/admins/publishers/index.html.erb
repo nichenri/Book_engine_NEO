@@ -1,0 +1,40 @@
+<h2> 出版社の追加 </h2>
+
+<p><%= link_to "管理者画面へ戻る", admins_top_index_path %></p>
+<p><%= link_to "図書追加画面へ戻る", new_admins_book_path %></p>
+<br>
+<%= form_for @publisher, url:admins_publishers_path  do |f| %>
+  <p>
+  <%= f.label :新しい出版社名 %><br>
+  <%= f.text_field :publisher_name %>
+  </p>
+
+  <p>
+  <%= f.submit :出版社の追加 %>
+  </p>
+
+<% end %>
+
+<table rules="all">
+    <thead>
+      <tr>
+        <th>出版社名</th>
+        <th>更新日時</th>
+        <th>編集 削除</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @publishers.each do |publisher| %>
+      <tr>
+        <td><%= publisher.publisher_name %> </td>
+        <td><%= publisher.updated_at %></td>
+        <td>
+            <%= link_to "編集", edit_admins_publisher_path(publisher.id) %>
+            <%= link_to "削除", admins_publisher_path(publisher.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+

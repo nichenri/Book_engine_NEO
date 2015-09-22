@@ -1,0 +1,40 @@
+<h2> 著者の追加 </h2>
+
+<p><%= link_to "管理者画面へ戻る", admins_top_index_path %></p>
+<p><%= link_to "図書追加画面へ戻る", new_admins_book_path %>
+<br>
+<%= form_for @author, url: admins_authors_path do |f| %>
+  <p>
+  <%= f.label :新しい著者名 %><br>
+  <%= f.text_field :author_name %>
+  </p>
+
+  <p>
+  <%= f.submit :著者の追加 %>
+  </p>
+
+<% end %>
+
+<table rules="all">
+
+    <thead>
+      <tr>
+        <th>著者名</th>
+        <th>更新日時</th>
+        <th>編集 削除</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @authors.each do |author| %>
+      <tr>
+        <td><%= author.author_name %> </td>
+        <td><%= author.updated_at %></td>
+        <td>
+            <%= link_to "編集", edit_admins_author_path(author.id) %>
+            <%= link_to "削除", admins_author_path(author.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

@@ -1,0 +1,31 @@
+<h1> 新規図書購入希望申し込みフォーム </h1>
+
+<p><%= link_to "本検索画面へ戻る", users_top_index_path %></p>
+<br>
+<%= form_for @new_book, url: users_new_books_path do |f| %>
+  <%= f.fields_for @new_book.additions do |df| %>
+  <p>
+  <%= f.label :欲しい本のタイトル %><br>
+  <%= f.text_field :title %>
+  </p>
+
+  <p>
+  <%= f.label :欲しい本の著者 %><br>
+  <%= f.text_field :author %>
+  </p>
+
+  <p>
+  <%= f.label :欲しい本の出版社 %><br>
+  <%= f.text_field :publisher %>
+  </p>
+
+  <p>
+  <%= f.label :欲しい本の分野 %><br>
+  <%= f.collection_select :genre_id, Genre.all, :id, :genre_name  %>
+  </p>
+
+  <p>
+  <%= f.submit :本の追加 %>
+  </p>
+<% end %>
+<% end %>

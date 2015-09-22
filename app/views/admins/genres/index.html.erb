@@ -1,0 +1,40 @@
+<h2> 分野の追加 </h2>
+
+<p><%= link_to "管理者画面へ戻る", admins_top_index_path %></p>
+<p><%= link_to "図書追加画面へ戻る", new_admins_book_path %></p>
+<br>
+<%= form_for @genre, url:admins_genres_path do |f| %>
+  <p>
+  <%= f.label :新しい分野名 %><br>
+  <%= f.text_field :genre_name %>
+  </p>
+
+  <p>
+  <%= f.submit :分野の追加 %>
+  </p>
+
+<% end %>
+
+<table rules="all">
+    <thead>
+      <tr>
+        <th>分野名</th>
+        <th>更新日時</th>
+        <th>編集 削除</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @genres.each do |genre| %>
+      <tr>
+        <td><%= genre.genre_name %> </td>
+        <td><%= genre.updated_at %></td>
+        <td>
+            <%= link_to "編集", edit_admins_genre_path(genre.id) %>
+            <%= link_to "削除", admins_genre_path(genre.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+

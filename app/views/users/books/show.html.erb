@@ -1,0 +1,134 @@
+<h2> 詳細情報 </h2>
+
+<p><%= link_to "図書検索画面へ戻る", users_top_index_path %></p>
+<br>
+
+
+<% if @user_bookmark %>
+  <%= link_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "Are you sure?"} %><br>
+<% else %>
+  <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
+  <%= f.submit :ブックマークに入れる %>
+    <br>
+  <% end %>
+<% end %>
+
+
+<table rules="all" border="3">
+  <tr>
+    <td>タイトル</td>
+    <td><strong><%= @book.title %></strong></td>
+  </tr>
+
+  <tr>
+    <td>著者</td>
+    <td><%= @book.author.author_name %></td>
+  </tr>
+
+  <tr>
+    <td>出版社</td>
+    <td><%= @book.publisher.publisher_name %></td>
+  </tr>
+
+  <tr>
+    <td>分野</td>
+    <td><%= @book.genre.genre_name %></td>
+  </tr>
+
+  <tr>
+    <td>図書館保有状況</td>
+    <td>合計保有数: <%= @stocks.count %><br>
+      <ul>
+        <% @stocks.each do |stock| %>
+          <li>
+            <%= sprintf("%08d", stock.id) %>
+            <% if stock.borrowing %>
+              貸出し中
+              <% else if stock.stock_reservation %>
+                取り置き中 
+              <% else %>
+                在庫あり
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <% user_borrowing_count = 0 %>
+          <% user_stock_reservation_count = 0 %>
+          <% user_book_reservation_count = 0 %>
+          <% stock_count = 0 %>
+          <% empty_stock = 0 %>
+
+          <% funcs_stocks.each do |stock| %>
+            <% if stock.borrowing_user == current_user %>
+              <% user_borrowing_count += 1 %>
+              <% empty_stock = stock %>
+              <% break %>
+              <% else if stock.reservation_user == current_user %>
+                <% user_stock_reservation_count += 1 %>
+                <% empty_stock = stock %>
+                <% break %>
+                <% else if @book.reservation_users.include?(:current_user) %>
+                  <% user_book_reservation_count += 1 %>
+                  <% break %>
+                  <% else if stock.borrowing || stock.stock_reservation %>
+                    <% stock_count += 1 %>
+                  <% else %>
+                    <% empty_stock = stock %>
+                    <% break %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+
+          <br>
+          <% if user_borrowing_count == 1 %>
+            返却期限:
+            <% else if user_stock_reservation_count == 1 %>
+              取り置き有効期限:<%= empty_stock.stock_reservation.invalid_at %>
+            <%= link_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, empty_stock.id, empty_stock.stock_reservation.id), method: :delete, data: {confirm: "Are you sure??"} %>
+            <% else if user_book_reservation_count == 1 %>
+              <%= link_to "予約取り消し", users_book_book_reservation_path(@book.id), method: :delete, data: {confirm: "Are you sure??"} %>
+            <% else %>
+              <% if stock_count == @stocks.count %>
+                <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
+                  <%= f.submit :この本を予約する %>
+                <% end %>
+              <% else %>
+                <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, empty_stock.id) do |f| %>
+                  <%= f.submit :この本を予約する %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+          </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
+<h3>この本に対するレビュー一覧</h3>
+<ul>
+  <% @reviews.each do |review| %>
+    <li>
+      <%= review.user.name %> |
+      <%= review.updated_at %> 
+      <% if review.user_id == @user.id %>
+        <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
+        <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "Are you sure?"} %>
+      <% end %><br>
+      <%= review.content %>
+    </li>
+    <% end %>
+
+    <li>
+      <%= form_for @review, url: users_book_reviews_path(@book.id) do |f| %>
+    <p>
+    <%= f.text_field :content %>
+    </p>
+    <p>
+    <%= f.submit :レビューの投稿 %>
+    </p>
+    <% end %>
+</ul>
