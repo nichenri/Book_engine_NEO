@@ -46,28 +46,22 @@
           <% end %>
           <br>
 
-
-          <%= link(@user_stock_borrowing, @user_stock_reservation, @book, @user_book_reservation, @stocked_stock_ids, @book_reservation, @stock_reservation)%>
-
-          <% if @user_stock_borrowing %>
-            返却期限:<%= @user_stock_borrowing.return_at.to_date %>
+          <% if @user_borrowed_stock_ids.present? %>
+            返却期限:
           <% else %>
-            <% if @user_stock_reservation %>
+            <% if @user_reserved_stock_ids.present? %>
               取り置き有効期限:<%= @user_stock_reservation.invalid_at.to_date%>
-              <%= link_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user_stock_reservation.stock_id, @user_stock_reservation.id), method: :delete, data: {confirm: "Are you sure??"} %>
             <% else %>
-              <% if @user_book_reservation %>
-                現在予約中です。後日また連絡いたします。<br>
-                <%= link_to "予約取り消し", users_book_book_reservation_path(@book.id, @user_book_reservation.id), method: :delete, data: {confirm: "Are you sure??"} %>
+              <% if @user_book_reservation.present? %>
+                <%= link_to "予約取り消し", users_book_book_reservation_path(@book.id), method: :delete, data: {confirm: "Are you sure??"} %>
               <% else %>
-                <% if @stocked_stock_ids.empty? %>
+                <%= @not_stocked_stock_ids %>
+                <% if @not_stocked_stock_ids %>
                   <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
                     <%= f.submit :この本を予約する %>
                   <% end %>
                 <% else %>
-                  <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, @stocked_stock_ids[0]) do |f| %>
-                    <%= f.submit :この本を予約する %>
-                  <% end %>
+                  よやく！
                 <% end %>
               <% end %>
             <% end %>
