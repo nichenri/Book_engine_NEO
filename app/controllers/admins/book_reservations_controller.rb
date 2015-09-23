@@ -1,2 +1,2 @@
-class BookReservationsController < ApplicationController
+class Admins::BookReservationsController < Admins::ApplicationController
 end
