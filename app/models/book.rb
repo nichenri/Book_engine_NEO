@@ -12,4 +12,13 @@ class Book < ActiveRecord::Base
 
   has_many :book_reservations
   has_many :reservation_users, through: :book_reservations, :source => 'user'
+
+
+  def remaining_stock
+   borrowing_stock_ids = Borrowing.where(stock_id: self.stocks).pluck(:stock_id)
+   reserved_stock_ids = StockReservation.where(stock_id: self.stocks).pluck(:stock_id)
+   self.stocks.where.not(id: borrowing_stock_ids + reserved_stock_ids).first
+  end
+
+
 end
