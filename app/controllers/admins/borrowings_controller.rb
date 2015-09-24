@@ -9,24 +9,20 @@ class Admins::BorrowingsController < Admins::ApplicationController
   end
 
   def create
-    @borrowing = Borrowing.new(borrowing_params)
-    @borrowing.save
-    @stock_reservation = StockReservation.find(stock_reservation_params[:id])
-    @stock_reservation.destroy
+    ActiveRecord::Base.transaction do
+      Borrowing.create!(borrowing_params)
+      StockReservation.find_by(params[:borrowing][:id]).destroy!
+    end
     redirect_to admins_borrowings_path
+  rescue => e
+    p e
+    redirect_to :back
   end
-
 
   private
 
     def borrowing_params
       params.require(:borrowing).permit(:user_id, :stock_id).merge(return_at: DateTime.now + 15.days)
     end
-
-    def stock_reservation_params
-      params.require(:borrowing).permit(:id)
-    end
-
-
 
 end

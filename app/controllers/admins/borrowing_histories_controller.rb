@@ -1,16 +1,19 @@
 class Admins::BorrowingHistoriesController < Admins::ApplicationController
 
   def create
-    @borrowing_history = BorrowingHistory.new(borrowing_history_params)
-    @borrowing_history.save
-    @borrowing = Borrowing.find(borrowing_params[:id])
-    if book_reservation
-      @stock_reservation = StockReservation.new(stock_reservation_params)
-      @stock_reservation.save
-      book_reservation.destroy
+    ActiveRecord::Base.transaction do
+      BorrowingHistory.create(borrowing_history_params)
+      @borrowing = Borrowing.find(params[:borrowing_history][:id])
+      if book_reservation
+        @stock_reservation = StockReservation.create(stock_reservation_params)
+        book_reservation.destroy
+      end
+      @borrowing.destroy
     end
-    @borrowing.destroy
     redirect_to admins_borrowings_path
+  rescue => e
+    p e
+    redirect_to :back
   end
 
     
@@ -22,10 +25,6 @@ class Admins::BorrowingHistoriesController < Admins::ApplicationController
 
     def stock_reservation_params
       params.require(:borrowing_history).permit(:user_id, :stock_id).merge(invalid_at: DateTime.now + 3.days)
-    end
-
-    def borrowing_params
-      params.require(:borrowing_history).permit(:id)
     end
 
     def book_reservation
