@@ -1,0 +1,47 @@
+<h2> あなたの貸借り履歴</h2>
+
+<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
+
+<br>
+
+<%= search_form_for @borrowing_history_search, url: admins_borrowing_histories_path do |f| %>
+  <div class="field">
+    <%= f.label :stock_id_eq, "貸出図書番号" %>
+    <%= f.text_field :stock_id_eq %><br>
+    <%= f.label :stock_book_author_author_name_cont, "著者" %>
+    <%= f.text_field :stock_book_author_author_name_cont %><br>
+    <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
+    <%= f.text_field :stock_book_publisher_publisher_name_cont %><br>
+    <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
+    <%= f.text_field :stock_book_genre_genre_name_cont %><br>
+  </div>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+<br>
+
+<table rules="all" border="3">
+  <thead>
+    <tr>
+      <th>貸出し図書番号</th>
+      <th>タイトル</th>
+      <th>著者</th>
+      <th>出版社</th>
+      <th>貸出日</th>
+      <th>返却日</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @borrowing_histories.each do |history| %>
+      <tr>
+        <td><%= sprintf("%08d", history.stock_id) %></td>
+        <td><%= history.stock.book.title %></td>
+        <td><%= history.stock.book.author.author_name %></td>
+        <td><%= history.stock.book.publisher.publisher_name %></td>
+        <td><%= history.borrowed_at.to_date %></td>
+        <td><%= history.created_at.to_date %></td>
+    <% end %>
+    </tr>
+  </tbody>
+

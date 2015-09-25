@@ -1,6 +1,7 @@
 <h1>図書館へようこそ</h1>
 
 <p><%= link_to "新規図書購入申請", new_users_new_book_path %></p>
+<p><%= link_to "あなたの貸借り履歴", users_borrowing_histories_path %></p>
 
 <h2>図書一覧</h2>
 <%= search_form_for @book_search, url: admins_top_index_path do |f| %>
@@ -40,6 +41,57 @@
     </tbody>
   <% end %>
 </table>
+
+<h2>現在予約している図書一覧</h2>
+<table rules="all">
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>状態</th>
+        <th>各種期日</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @borrowings.each do |borrowing| %>
+      <tr>
+        <td><%= link_to borrowing.stock.book.title, users_book_path(borrowing.stock.book_id) %> </td>
+        <td><%= borrowing.stock.book.author.author_name %></td>
+        <td><%= borrowing.stock.book.publisher.publisher_name %></td>
+        <td>
+          <% if borrowing.return_at < DateTime.now %>
+            現在貸出中
+          <% else %>
+            貸出期限オーバー
+          <% end %>
+        </td>
+        <td>返却期限: <%= borrowing.return_at.to_date %></td>
+      </tr>
+      <% end %>
+
+      <% @stock_reservations.each do |stock_reservation| %>
+      <tr>
+        <td><%= link_to stock_reservation.stock.book.title, users_book_path(stock_reservation.stock.book_id) %> </td>
+        <td><%= stock_reservation.stock.book.author.author_name %></td>
+        <td><%= stock_reservation.stock.book.publisher.publisher_name %></td>
+        <td>現在取り置き中</td>
+        <td>取り置き有効期限: <%= stock_reservation.invalid_at.to_date %></td>
+      </tr>
+      <% end %>
+
+      <% @book_reservations.each do |book_reservation| %>
+      <tr>
+        <td><%= link_to book_reservation.book.title, users_book_path(book_reservation.book_id) %> </td>
+        <td><%= book_reservation.book.author.author_name %></td>
+        <td><%= book_reservation.book.publisher.publisher_name %></td>
+        <td>現在予約中</td>
+        <td>取り置きが始まるまでしばしお待ちください</td>
+      </tr>
+      <% end %>
+    </tbody>
+</table>
+
 
 <h2>ブックマークした本一覧</h2>
 <table rules="all">
