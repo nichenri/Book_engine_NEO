@@ -25,4 +25,18 @@ class User < ActiveRecord::Base
   has_many :book_reservations
   has_many :reservation_books, through: :book_reservations, :source => 'book'
 
+
+  def stock_borrow(stocks)
+    self.borrowings.find_by(stock_id: stocks.pluck(:id))
+  end
+
+  def stock_reserv(stocks)
+    self.stock_reservations.find_by(stock_id: stocks.pluck(:id))
+  end
+
+  def book_reserv(book)
+    self.book_reservations.find_by(book_id: book.id)
+  end
+
+
 end
