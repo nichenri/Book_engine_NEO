@@ -1,0 +1,2 @@
+module AdditionHistoriesHelper
+end

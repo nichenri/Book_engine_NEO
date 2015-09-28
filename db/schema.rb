@@ -11,24 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922014513) do
+ActiveRecord::Schema.define(version: 20150928095608) do
 
-  create_table "addition_statuses", force: :cascade do |t|
-    t.string   "status_name", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+  create_table "addition_histories", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "new_book_id", limit: 4
+    t.boolean  "status"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
+
+  add_index "addition_histories", ["new_book_id"], name: "index_addition_histories_on_new_book_id", using: :btree
+  add_index "addition_histories", ["user_id"], name: "index_addition_histories_on_user_id", using: :btree
 
   create_table "additions", force: :cascade do |t|
-    t.integer  "user_id",            limit: 4
-    t.integer  "new_book_id",        limit: 4
-    t.date     "arrive_at"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "addition_status_id", limit: 4, default: 1
+    t.integer  "user_id",     limit: 4
+    t.integer  "new_book_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "additions", ["addition_status_id"], name: "index_additions_on_addition_status_id", using: :btree
   add_index "additions", ["new_book_id"], name: "index_additions_on_new_book_id", using: :btree
   add_index "additions", ["user_id"], name: "index_additions_on_user_id", using: :btree
 
@@ -124,10 +126,7 @@ ActiveRecord::Schema.define(version: 20150922014513) do
     t.string   "publisher",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "genre_id",   limit: 4
   end
-
-  add_index "new_books", ["genre_id"], name: "index_new_books_on_genre_id", using: :btree
 
   create_table "publishers", force: :cascade do |t|
     t.string   "publisher_name", limit: 255
@@ -184,7 +183,8 @@ ActiveRecord::Schema.define(version: 20150922014513) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "additions", "addition_statuses"
+  add_foreign_key "addition_histories", "new_books"
+  add_foreign_key "addition_histories", "users"
   add_foreign_key "additions", "new_books"
   add_foreign_key "additions", "users"
   add_foreign_key "book_reservations", "books"
@@ -198,7 +198,6 @@ ActiveRecord::Schema.define(version: 20150922014513) do
   add_foreign_key "borrowing_histories", "users"
   add_foreign_key "borrowings", "stocks"
   add_foreign_key "borrowings", "users"
-  add_foreign_key "new_books", "genres"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
   add_foreign_key "stock_reservations", "stocks"
