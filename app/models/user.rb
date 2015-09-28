@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   has_many :additions
   has_many :new_books, through: :additions
 
+  has_many :addition_histories
+  has_many :new_books, through: :addition_histories
+
   has_many :borrowings
   has_many :borrowing_stocks, through: :borrowings, :source => 'stock'
 

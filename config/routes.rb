@@ -32,7 +32,8 @@ Rails.application.routes.draw do
         resources :stock_reservations
       end
     end
-    resources :additions, only: [:update]
+    resources :additions, only: [:index, :delete]
+    resources :addition_histories, only: [:index]
     resources :new_books, only: [:index]
   end
 

@@ -44,6 +44,7 @@
         <td><%= book.publisher.publisher_name %></td>
         <td><%= book.genre.genre_name %></td>
         <td><%= book.stocks.count %></td>
+        <td><%= book.remaining_stocks.count %></td>
         <td>
           <%= link_to "編集", edit_admins_book_path(book.id) %> 
           <%= link_to "削除", admins_book_path(book.id), method: :delete, data: {confirm: "本当に削除しますか？"} %> 
