@@ -7,13 +7,13 @@ class Admins::BorrowingHistoriesController < Admins::ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      BorrowingHistory.create(borrowing_history_params)
+      BorrowingHistory.create!(borrowing_history_params)
       @borrowing = Borrowing.find(params[:borrowing_history][:id])
       if book_reservation
-        @stock_reservation = StockReservation.create(stock_reservation_params)
-        book_reservation.destroy
+        @stock_reservation = book_reservation.user.stock_reservations.create!(stock_reservation_params)
+        book_reservation.destroy!
       end
-      @borrowing.destroy
+      @borrowing.destroy!
     end
     redirect_to admins_borrowings_path
   rescue => e
@@ -29,7 +29,7 @@ class Admins::BorrowingHistoriesController < Admins::ApplicationController
     end
 
     def stock_reservation_params
-      params.require(:borrowing_history).permit(:user_id, :stock_id).merge(invalid_at: DateTime.now + 3.days)
+      params.require(:borrowing_history).permit(:stock_id).merge(invalid_at: DateTime.now + 3.days)
     end
 
     def book_reservation
