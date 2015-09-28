@@ -1,6 +1,7 @@
 <h2>新規図書購入申請一覧</h2>
 <p><%= link_to "図書検索画面へ", admins_top_index_path %></p>
 
+<h3>現在承認待ちの図書</h3>
 <%= search_form_for @addition_search, url: admins_new_books_path do |f| %>
   <div class="field">
     <%= f.label :user_name_cont, "ユーザ名" %>
@@ -23,8 +24,7 @@
         <th>申請書名</th>
         <th>申請書著者</th>
         <th>申請書出版社</th>
-        <th>申請書分野</th>
-        <th>現在の状態</th>
+        <th>申請日時</th>
         <th>状態の更新</th>
       </tr>
     </thead>
@@ -36,25 +36,69 @@
         <td><%= addition.new_book.title %></td>
         <td><%= addition.new_book.author %> </td>
         <td><%= addition.new_book.publisher %> </td>
-        <td><%= addition.new_book.genre.genre_name %></td>
+        <td><%= addition.created_at %></td>
         <td>
-          <% case addition.addition_status_id %>
-          <% when 1 %>
-            承認中
-          <% when 2 %>
-            不許可
-          <% when 3 %>
-            許可
-          <% end %>
-        </td>
-        <td>
-          <%= form_for addition, :url => admins_addition_path(addition.id) do |f| %>
-            <%= f.select :addition_status_id, {"承認中" => "1", "不許可" => "2", "許可" => "3"} %>
-            <%= f.submit :更新 %>
+          <%= form_for @addition_history, :url => admins_addition_histories_path do |f| %>
+            <%= f.hidden_field :user_id, :value => addition.user_id %>
+            <%= f.hidden_field :addition_id, :value => addition.id %>
+            <%= f.hidden_field :new_book_id, :value => addition.new_book_id %>
+            <%= f.select :status, {"不許可" => "FALSE", "許可" => "TRUE"} %>
+            <%= f.submit :状態の更新 %>
           <% end %>
         </td>
       </tr>
     </tbody>
   <% end %>
 </table>
+
+
+<h3>承認済みの図書</h3>
+<%= search_form_for @addition_history_search, url: admins_new_books_path do |f| %>
+  <div class="field">
+    <%= f.label :user_name_cont, "ユーザ名" %>
+    <%= f.text_field :user_name_cont %><br>
+    <%= f.label :new_book_title_cont, "タイトル" %>
+    <%= f.text_field :new_book_title_cont %><br>
+    <%= f.label :new_book_author_cont, "著者" %>
+    <%= f.text_field :new_book_author_cont %><br>
+    <%= f.label :new_book_publisher, "出版社" %>
+    <%= f.text_field :new_book_publisher_cont %><br>
+  </div>
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>
+
+
+<table rules="all">
+    <thead>
+      <tr>
+        <th>申請者</th>
+        <th>申請書名</th>
+        <th>申請書著者</th>
+        <th>申請書出版社</th>
+        <th>申請日時</th>
+        <th>状態の更新</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @addition_histories.each do |addition_history| %>
+      <tr>
+        <td><%= addition_history.user.name %> </td>
+        <td><%= addition_history.new_book.title %></td>
+        <td><%= addition_history.new_book.author %> </td>
+        <td><%= addition_history.new_book.publisher %> </td>
+        <td><%= addition_history.created_at %></td>
+        <td>
+          <% if addition_history.status %>
+            許可
+          <% else %>
+            不許可
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+
+
 

@@ -20,11 +20,6 @@
   </p>
 
   <p>
-  <%= f.label :欲しい本の分野 %><br>
-  <%= f.collection_select :genre_id, Genre.all, :id, :genre_name  %>
-  </p>
-
-  <p>
   <%= f.submit :本の追加 %>
   </p>
 <% end %>

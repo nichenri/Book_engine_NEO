@@ -1,39 +1,27 @@
 <h1>新規図書購入申請一覧</h1>
 
 
-<p><%= link_to "図書検索画面へ", books_path %></p>
+<p><%= link_to "図書検索画面へ", users_books_path %></p>
 
 
 <table rules="all">
     <thead>
       <tr>
-        <th>申請者</th>
         <th>申請書名</th>
         <th>申請書著者</th>
         <th>申請書出版社</th>
-        <th>申請書分野</th>
         <th>現在の状態</th>
-        <th>状態の更新</th>
+        <th>登録内容の変更</th>
       </tr>
     </thead>
 
     <tbody>
       <% @additions.each do |addition| %>
       <tr>
-        <td><%= addition.user.name %> </td>
         <td><%= addition.new_book.title %></td>
         <td><%= addition.new_book.author %> </td>
         <td><%= addition.new_book.publisher %> </td>
-        <td><%= addition.new_book.genre.genre_name %></td>
         <td>
-          <% case addition.addition_status_id %>
-          <% when 1 %>
-            <p>承認中</p>
-          <% when 2 %>
-            <p>不許可</p>
-          <% when 3 %>
-            <p>許可</p>
-          <% end %>
         </td>
         <td>
           <%= form_for addition, :url => new_book_addition_path(addition.new_book_id, addition.id) do |f| %>
