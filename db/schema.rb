@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20150928095608) do
   add_index "additions", ["new_book_id"], name: "index_additions_on_new_book_id", using: :btree
   add_index "additions", ["user_id"], name: "index_additions_on_user_id", using: :btree
 
+ActiveRecord::Schema.define(version: 20150928095304) do
+
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
