@@ -1,5 +1,10 @@
 class Admins::BorrowingHistoriesController < Admins::ApplicationController
 
+  def index
+    @borrowing_history_search = BorrowingHistory.search(params[:q])
+    @borrowing_histories = @borrowing_history_search.result
+  end
+
   def create
     ActiveRecord::Base.transaction do
       BorrowingHistory.create(borrowing_history_params)
@@ -30,6 +35,5 @@ class Admins::BorrowingHistoriesController < Admins::ApplicationController
     def book_reservation
       @borrowing.stock.book.book_reservations.all.order("created_at").first
     end
-
 
 end
