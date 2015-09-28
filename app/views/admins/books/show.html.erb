@@ -34,14 +34,7 @@
       <% @stocks.each do |stock| %>
         <li>
           <%= sprintf("%08d", stock.id) %>
-          <% if stock.borrowings %>
-            貸出し中
-            <% else if stock.stock_reservations %>
-              取り置き中 
-              <% else %>
-                在庫あり
-            <% end %>
-          <% end %>
+          <%= status_for_admins(stock) %>
         </li>
       <% end %>
     </ul></td>

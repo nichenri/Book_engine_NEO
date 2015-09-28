@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   namespace :admins do
     get 'top/index'
+    resources :borrowings
+    resources :borrowing_histories
     resources :bookmarks, only: [:index]
     resources :authors, except: [:show]
     resources :genres, except: [:show]
@@ -27,8 +29,6 @@ Rails.application.routes.draw do
       resources :book_reservations
       resources :stocks, only: [:create, :destroy] do
         resources :stock_reservations
-        resources :borrowings
-        resources :borrowing_histories
       end
     end
     resources :additions, only: [:update]
