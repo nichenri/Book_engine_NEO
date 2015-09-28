@@ -4,7 +4,4 @@ class Admins::TopController < Admins::ApplicationController
     @books = @book_search.result
     @stock = Stock.new
   end
-
-
-
 end
