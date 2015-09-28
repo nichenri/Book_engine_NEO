@@ -12,6 +12,19 @@ module BooksHelper
     end
   end
 
+  def status_for_admins(stock)
+    if stock.borrowing
+      "#{stock.borrowing.user.name}に貸出し中 貸出し期限: #{stock.borrowing.return_at.to_date}"
+    else 
+      if stock.stock_reservation
+      "#{stock.stock_reservation.user.name}のために取り置き中 取り置き期限: #{stock.stock_reservation.invalid_at.to_date}"
+      else
+        "在庫あり"
+      end
+    end
+  end
+
+
   def status_select(user, stocks, book, book_reservation, stock_reservation)
     if user.stock_borrow(stocks) 
       "返却期限: #{user.stock_borrow(stocks).return_at.to_date}" 

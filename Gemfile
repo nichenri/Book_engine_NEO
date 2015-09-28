@@ -5,6 +5,8 @@ gem 'devise'
 group :development, :test do
     gem 'rails-erd', github: 'ready4god2513/rails-erd', branch: 'rails-4.2-support-fix'
 end
+gem 'whenever', :require => false
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use mysql as the database for Active Record
