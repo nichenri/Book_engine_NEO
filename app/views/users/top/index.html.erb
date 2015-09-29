@@ -4,7 +4,7 @@
 <p><%= link_to "あなたの貸借り履歴", users_borrowing_histories_path %></p>
 
 <h2>図書一覧</h2>
-<%= search_form_for @book_search, url: admins_top_index_path do |f| %>
+<%= search_form_for @book_search, url: users_top_index_path do |f| %>
   <div class="field">
     <%= f.label :title_cont, "タイトル" %>
     <%= f.text_field :title_cont %><br>
