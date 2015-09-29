@@ -101,3 +101,11 @@
     </p>
     <% end %>
 </ul>
+
+<h3>この本を借りた人一覧</h3>
+<ul>
+  <% @book.borrowing_records.each do |borrowing_record| %>
+    <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
+  <% end %>
+</ul>
+
