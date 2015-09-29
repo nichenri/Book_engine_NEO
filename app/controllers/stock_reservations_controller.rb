@@ -1,2 +1,0 @@
-class StockReservationsController < ApplicationController
-end

@@ -1,2 +1,0 @@
-class BookReservationsController < ApplicationController
-end
