@@ -3,7 +3,7 @@ class Admins::AdditionHistoriesController < Admins::ApplicationController
   def create
     ActiveRecord::Base.transaction do
       AdditionHistory.create!(addition_history_params)
-      Addition.destroy!(params[:addition_history][:addition_id])
+      Addition.find_by(params[:addition_history][:addition_id]).destroy!
     end
     redirect_to admins_new_books_path
   rescue => e

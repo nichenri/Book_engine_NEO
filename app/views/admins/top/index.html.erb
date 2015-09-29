@@ -49,7 +49,7 @@
           <%= link_to "編集", edit_admins_book_path(book.id) %> 
           <%= link_to "削除", admins_book_path(book.id), method: :delete, data: {confirm: "本当に削除しますか？"} %> 
           <%= form_for @stock, url: admins_book_stocks_path(book.id) do |f| %> 
-            <%= f.submit :add %>
+            <%= f.submit :入荷 %>
           <% end %>
         </td>
       </tr>
