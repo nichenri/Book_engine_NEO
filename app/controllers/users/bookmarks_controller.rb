@@ -3,17 +3,12 @@ class Users::BookmarksController < UsersController
 
 
   def create
-    @bookmark = @book.bookmarks.new(user_id: current_user.id)
-    if @bookmark.save
-      redirect_to users_book_path(@book.id)
-    else 
-      render 'new'
-    end
+    @book.bookmarks.create(user_id: current_user.id)
+    redirect_to users_book_path(@book.id)
   end
 
   def destroy
-    @bookmark = @book.bookmarks.find(params[:id])
-    @bookmark.destroy
+    @book.bookmarks.find(params[:id]).destroy
     redirect_to users_book_path(@bookmark.book_id)
   end
 

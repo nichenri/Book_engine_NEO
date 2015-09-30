@@ -54,7 +54,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @borrowings.each do |borrowing| %>
+      <% @user.borrowings.each do |borrowing| %>
       <tr>
         <td><%= link_to borrowing.stock.book.title, users_book_path(borrowing.stock.book_id) %> </td>
         <td><%= borrowing.stock.book.author.author_name %></td>
@@ -70,7 +70,7 @@
       </tr>
       <% end %>
 
-      <% @stock_reservations.each do |stock_reservation| %>
+      <% @user.stock_reservations.each do |stock_reservation| %>
       <tr>
         <td><%= link_to stock_reservation.stock.book.title, users_book_path(stock_reservation.stock.book_id) %> </td>
         <td><%= stock_reservation.stock.book.author.author_name %></td>
@@ -80,7 +80,7 @@
       </tr>
       <% end %>
 
-      <% @book_reservations.each do |book_reservation| %>
+      <% @user.book_reservations.each do |book_reservation| %>
       <tr>
         <td><%= link_to book_reservation.book.title, users_book_path(book_reservation.book_id) %> </td>
         <td><%= book_reservation.book.author.author_name %></td>

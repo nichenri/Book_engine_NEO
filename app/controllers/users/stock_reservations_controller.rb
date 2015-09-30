@@ -2,19 +2,14 @@ class Users::StockReservationsController < UsersController
 
   def create
     @book = Book.find(params[:book_id])
-    @stock_reservation = StockReservation.new(stock_reservation_params)
-    if @stock_reservation.save
-      redirect_to users_book_path(@book.id)
-    else
-      render 'new'
-    end
+    StockReservation.create(stock_reservation_params)
+    redirect_to users_book_path(@book.id)
   end
 
 
   def destroy
     @book = Book.find(params[:book_id])
-    @stock_reservation = StockReservation.find(params[:id])
-    @stock_reservation.destroy
+    StockReservation.find(params[:id].destroy
     redirect_to users_book_path(@book.id)
   end
 

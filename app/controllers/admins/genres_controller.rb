@@ -1,6 +1,5 @@
 class Admins::GenresController < AdminsController
   before_action :set_genre, only: [:edit, :update, :destroy] 
-  before_action :set_admin, only: [:create, :update, :destroy]
 
   def index
     @genres = Genre.all
@@ -8,23 +7,16 @@ class Admins::GenresController < AdminsController
   end
 
   def create
-    @genre = Genre.new(genre_params)
-    if @genre.save 
-      redirect_to admins_genres_path
-    else 
-      render 'new'
-    end
+    Genre.create(genre_params)
+    redirect_to admins_genres_path
   end
 
   def edit
   end
 
   def update
-    if @genre.update(genre_params) 
-      redirect_to admins_genres_path
-    else 
-      render 'edit'
-    end
+    @genre.update(genre_params) 
+    redirect_to admins_genres_path
   end
 
   def destroy
@@ -33,10 +25,6 @@ class Admins::GenresController < AdminsController
   end
 
   private
-
-    def set_admin
-      @admin = current_admin
-    end
 
     def genre_params
       params.require(:genre).permit(:genre_name)

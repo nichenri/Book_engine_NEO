@@ -1,9 +1,9 @@
 class Admins::BorrowingsController < AdminsController
 
   def index 
-    @borrowings = Borrowing.all
-    @stock_reservations = StockReservation.all
-    @book_reservations = BookReservation.all
+    @borrowings = Borrowing.all.includes(:user, stock: [ book: [:author, :publisher, :genre]])
+    @stock_reservations = StockReservation.all.includes(:user, stock: [ book: [:author, :publisher, :genre]])
+    @book_reservations = BookReservation.all.includes(:user, book: [:author, :publisher, :genre])
     @borrowing = Borrowing.new
     @borrowing_history = BorrowingHistory.new 
   end

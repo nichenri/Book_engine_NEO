@@ -7,30 +7,21 @@ class Admins::AuthorsController < AdminsController
   end
 
   def create
-    @admin = current_admin
-    @author = Author.new(author_params)
-    if @author.save 
-      redirect_to admins_authors_path
-    else 
-      render 'new'
-    end
+    Author.create(author_params)
+    redirect_to admins_authors_path
   end
 
   def edit
   end
 
   def update
-    @admin = current_admin
-    if @author.update(author_params) 
-      redirect_to admins_authors_path
-    else 
-      render 'edit'
-    end
+    @author.update(author_params) 
+    redirect_to admins_authors_path
   end
 
   def destroy
     @author.destroy
-      redirect_to admins_authors_path
+    redirect_to admins_authors_path
   end
 
   private

@@ -3,10 +3,8 @@ class Admins::BooksController < AdminsController
   before_action :set_admin, only: [:create, :update, :destroy]
 
   def show
-    @book = Book.find(params[:id])
-    @stocks = @book.stocks
-    @reviews = @book.reviews.where(params[:id])
-    @bookmarks = @book.bookmarks.where(params[:id])
+    @book = Book.includes(:author, :publisher, :genre, stocks: [borrowing: [:user], stock_reservation: [:user]]).find(params[:id])
+    @reviews = @book.reviews.where(params[:id]).includes(:user)
   end
 
   def new
@@ -14,23 +12,16 @@ class Admins::BooksController < AdminsController
   end
 
   def create 
-    @book = Book.new(book_params)
-    if @book.save 
-      redirect_to admins_top_index_path(@admin.id)
-    else 
-      render 'new'
-    end
+    Book.create(book_params)
+    redirect_to admins_top_index_path(@admin.id)
   end
 
   def edit
   end
 
   def update
-    if @book.update(book_params) 
-      redirect_to admins_top_index_path(@admin.id)
-    else 
-      render 'edit'
-    end
+    @book.update(book_params) 
+    redirect_to admins_top_index_path(@admin.id)
   end
 
   def destroy

@@ -1,10 +1,8 @@
 class Users::NewBooksController < UsersController
 
   def index 
-    @user = current_user
+    @user = User.includes(additions: [:new_book], addition_histories: [:new_book]).find(current_user)
     @new_book = NewBook.new
-    @additions = @user.additions.all
-    @addition_histories = @user.addition_histories.all
   end
 
   def create

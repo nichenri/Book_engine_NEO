@@ -79,7 +79,7 @@
 
 <h3>この本に対するレビュー一覧</h3>
 <ul>
-  <% @reviews.each do |review| %>
+  <% @book.reviews.each do |review| %>
     <li>
       <%= review.user.name %> |
       <%= review.updated_at %> 

@@ -45,7 +45,7 @@
     </thead>
 
     <tbody>
-      <% @additions.each do |addition| %>
+      <% @user.additions.each do |addition| %>
         <tr>
           <td><%= addition.new_book.title %></td>
           <td><%= addition.new_book.author %> </td>
@@ -56,7 +56,7 @@
         </tr>
       <% end %>
 
-      <% @addition_histories.each do |addition_history| %>
+      <% @user.addition_histories.each do |addition_history| %>
         <tr>
           <td><%= addition_history.new_book.title %></td>
           <td><%= addition_history.new_book.author %> </td>
