@@ -1,4 +1,4 @@
-class Admins::StocksController < Admins::ApplicationController
+class Admins::StocksController < AdminsController
 
   def create
     @book = Book.find(params[:book_id])

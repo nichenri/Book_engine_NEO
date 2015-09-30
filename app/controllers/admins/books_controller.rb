@@ -1,4 +1,4 @@
-class Admins::BooksController < Admins::ApplicationController
+class Admins::BooksController < AdminsController
   before_action :set_book,  only: [:edit, :update, :destroy]
   before_action :set_admin, only: [:create, :update, :destroy]
 

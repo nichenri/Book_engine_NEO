@@ -1,4 +1,4 @@
-class Admins::AdditionsController < Admins::ApplicationController
+class Admins::AdditionsController < AdminsController
 
 end
 

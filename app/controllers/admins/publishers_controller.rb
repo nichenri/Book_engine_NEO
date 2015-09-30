@@ -1,4 +1,4 @@
-class Admins::PublishersController < Admins::ApplicationController
+class Admins::PublishersController < AdminsController
   before_action :set_publisher, only: [:edit, :update, :destroy] 
   before_action :set_admin, only: [:create, :update, :destroy]
 

@@ -1,4 +1,4 @@
-class Admins::GenresController < Admins::ApplicationController
+class Admins::GenresController < AdminsController
   before_action :set_genre, only: [:edit, :update, :destroy] 
   before_action :set_admin, only: [:create, :update, :destroy]
 

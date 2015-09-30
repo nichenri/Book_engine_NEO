@@ -1,4 +1,4 @@
-class Users::AdditionsController < Users::ApplicationController
+class Users::AdditionsController < UsersController
 
   def destroy 
     addition = Addition.find_by(params[:id])

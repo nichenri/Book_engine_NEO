@@ -1,4 +1,4 @@
-class Users::BooksController < Users::ApplicationController
+class Users::BooksController < UsersController
   before_action :set_book,  only: [:show]
 
   def show

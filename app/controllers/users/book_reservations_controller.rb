@@ -1,4 +1,4 @@
-class Users::BookReservationsController < Users::ApplicationController
+class Users::BookReservationsController < UsersController
 
   before_action :set_book
 

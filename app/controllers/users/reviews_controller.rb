@@ -1,4 +1,4 @@
-class Users::ReviewsController < Users::ApplicationController
+class Users::ReviewsController < UsersController
   before_action :set_book
   before_action :set_review, only: [:edit, :update, :destroy]
 

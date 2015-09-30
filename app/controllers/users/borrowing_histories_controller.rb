@@ -1,4 +1,4 @@
-class Users::BorrowingHistoriesController < Users::ApplicationController
+class Users::BorrowingHistoriesController < UsersController
 
   def index
     user = current_user

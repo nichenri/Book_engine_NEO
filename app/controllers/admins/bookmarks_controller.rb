@@ -1,4 +1,4 @@
-class Admins::BookmarksController < Admins::ApplicationController
+class Admins::BookmarksController < AdminsController
 
   def index
     @bookmark_search = Bookmark.search(params[:q])

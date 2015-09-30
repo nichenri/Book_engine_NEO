@@ -1,4 +1,4 @@
-class Admins::AdditionHistoriesController < Admins::ApplicationController
+class Admins::AdditionHistoriesController < AdminsController
 
   def create
     ActiveRecord::Base.transaction do

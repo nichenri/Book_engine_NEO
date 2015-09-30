@@ -1,4 +1,4 @@
-class Users::BookmarksController < Users::ApplicationController
+class Users::BookmarksController < UsersController
   before_action :set_book, only: [:create, :destroy]
 
 

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'users/top#index'
   namespace :users do
-   get 'top/index'
+    get 'top/index'
     resources :borrowing_histories, only: [:index]
     resources :additions, only: [:destroy, :create]  
     resources :books, only: [:show] do

@@ -1,4 +1,4 @@
-class Users::TopController < Users::ApplicationController
+class Users::TopController < UsersController
   def index
     @user = current_user
     @book_search = Book.search(params[:q])

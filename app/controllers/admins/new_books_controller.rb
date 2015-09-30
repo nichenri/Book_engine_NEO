@@ -1,4 +1,4 @@
-class Admins::NewBooksController < Admins::ApplicationController
+class Admins::NewBooksController < AdminsController
 
   def index
     @additions = Addition.all.order("created_at DESC")

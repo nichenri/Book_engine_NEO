@@ -1,4 +1,4 @@
-class Admins::BorrowingHistoriesController < Admins::ApplicationController
+class Admins::BorrowingHistoriesController < AdminsController
 
   def index
     @borrowing_history_search = BorrowingHistory.search(params[:q])

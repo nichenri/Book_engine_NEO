@@ -1,4 +1,4 @@
-class Users::NewBooksController < Users::ApplicationController
+class Users::NewBooksController < UsersController
 
   def index 
     @user = current_user

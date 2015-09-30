@@ -1,4 +1,4 @@
-class Admins::BorrowingsController < Admins::ApplicationController
+class Admins::BorrowingsController < AdminsController
 
   def index 
     @borrowings = Borrowing.all
