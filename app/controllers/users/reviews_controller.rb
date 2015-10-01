@@ -3,15 +3,18 @@ class Users::ReviewsController < UsersController
   before_action :set_review, only: [:edit, :update, :destroy]
 
   def create
-    @book.reviews.create(review_params)
+    if @book.reviews.create(review_params)
+      redirect_to users_book_path(@book.id), notice: "レビューを作成しました"
+    end
   end
 
   def edit
   end
 
   def update
-    @review.update(review_params)
-    redirect_to users_book_path(@review.book_id)
+    if @review.update(review_params)
+      redirect_to users_book_path(@review.book_id), notice: "レビューを更新しました"
+    end
   end
 
   def destroy

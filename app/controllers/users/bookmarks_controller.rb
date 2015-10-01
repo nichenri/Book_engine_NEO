@@ -4,12 +4,12 @@ class Users::BookmarksController < UsersController
 
   def create
     @book.bookmarks.create(user_id: current_user.id)
-    redirect_to users_book_path(@book.id)
+    redirect_to users_book_path(@book.id), notice: "ブックマークに追加しました"
   end
 
   def destroy
     @book.bookmarks.find(params[:id]).destroy
-    redirect_to users_book_path(@bookmark.book_id)
+    redirect_to users_book_path(@book.id), notice: "ブックマークから削除しました"
   end
 
 

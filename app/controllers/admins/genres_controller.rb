@@ -7,16 +7,18 @@ class Admins::GenresController < AdminsController
   end
 
   def create
-    Genre.create(genre_params)
-    redirect_to admins_genres_path
+    if Genre.create(genre_params)
+      redirect_to admins_genres_path, notice: "新たな分野を追加しました"
+    end
   end
 
   def edit
   end
 
   def update
-    @genre.update(genre_params) 
-    redirect_to admins_genres_path
+    if @genre.update(genre_params) 
+      redirect_to admins_genres_path, notice: "分野情報を更新しました"
+    end
   end
 
   def destroy

@@ -9,7 +9,7 @@ class Users::StockReservationsController < UsersController
 
   def destroy
     @book = Book.find(params[:book_id])
-    StockReservation.find(params[:id].destroy
+    StockReservation.find(params[:id]).destroy
     redirect_to users_book_path(@book.id)
   end
 

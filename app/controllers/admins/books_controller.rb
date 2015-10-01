@@ -1,6 +1,6 @@
 class Admins::BooksController < AdminsController
   before_action :set_book,  only: [:edit, :update, :destroy]
-  before_action :set_admin, only: [:create, :update, :destroy]
+  before_action :set_admin, only: [:new, :create, :update, :destroy]
 
   def show
     @book = Book.includes(:author, :publisher, :genre, stocks: [borrowing: [:user], stock_reservation: [:user]]).find(params[:id])
@@ -12,21 +12,23 @@ class Admins::BooksController < AdminsController
   end
 
   def create 
-    Book.create(book_params)
-    redirect_to admins_top_index_path(@admin.id)
+    if Book.create(book_params)
+      redirect_to admins_top_index_path(@admin.id), notice: "新たな本を追加しました"
+    end
   end
 
   def edit
   end
 
   def update
-    @book.update(book_params) 
-    redirect_to admins_top_index_path(@admin.id)
+    if @book.update(book_params) 
+      redirect_to admins_top_index_path(@admin.id), notice: "図書情報を更新しました"
+    end
   end
 
   def destroy
     @book.destroy
-    redirect_to admins_top_index_path(@admin.id)
+    redirect_to admins_top_index_path(@admin.id), notice: "図書情報を削除しました"
   end
 
   private

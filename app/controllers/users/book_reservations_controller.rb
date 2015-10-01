@@ -8,7 +8,8 @@ class Users::BookReservationsController < UsersController
   end
 
   def destroy
-    @user.book_reservation.find(params[:id]).destroy
+    @user = current_user
+    @user.book_reservations.find(params[:id]).destroy
     redirect_to users_book_path(@book.id)
   end
 

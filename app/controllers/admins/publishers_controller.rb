@@ -7,16 +7,18 @@ class Admins::PublishersController < AdminsController
   end
 
   def create
-    Publisher.create(publisher_params)
-    redirect_to admins_publishers_path
+    if Publisher.create(publisher_params)
+      redirect_to admins_publishers_path, notice: "新たな出版社を追加しました"
+    end
   end
 
   def edit
   end
 
   def update
-    @publisher.update(publisher_params) 
-    redirect_to admins_publishers_path
+    if @publisher.update(publisher_params) 
+      redirect_to admins_publishers_path, notice: "出版社情報を更新しました"
+    end
   end
 
   def destroy

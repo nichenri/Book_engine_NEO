@@ -2,7 +2,6 @@
 
 
 <p><%= link_to "図書検索画面へ", users_top_index_path %></p>
-<p><%= link_to "新規図書購入申し込み", users_top_index_path %></p>
 
 <h3> 新規図書購入希望申し込みフォーム </h3>
 
@@ -30,17 +29,17 @@
 <% end %>
 
 
-<h3>あなたの出した新規図書予約申請</h3>
+<h3>あなたの出した新規図書購入申請</h3>
 
 <table rules="all">
     <thead>
       <tr>
-        <th>申請書名</th>
+        <th>申請書タイトル</th>
         <th>申請書著者</th>
         <th>申請書出版社</th>
-        <th>現在の状態</th>
         <th>申請日</th>
-        <th>登録内容の変更</th>
+        <th>現在の状態</th>
+        <th>申し込みの取り消し</th>
       </tr>
     </thead>
 
@@ -52,7 +51,7 @@
           <td><%= addition.new_book.publisher %> </td>
           <td><%= addition.created_at %></td>
           <td>現在承認中</td>
-          <td><%= link_to "図書購入申請の取り消し", users_addition_path(addition.id), method: :delete, data: {confirm: "予約を取り消しますか?"} %></td>
+          <td><%= link_to "図書購入申請の取り消し", users_addition_path(addition.id), method: :delete, data: {confirm: "申し込みを取り消しますか?"} %></td>
         </tr>
       <% end %>
 

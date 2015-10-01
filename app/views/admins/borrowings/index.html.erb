@@ -7,7 +7,7 @@
       <tr>
         <th>ユーザ名</th>
         <th>貸出図書番号</th>
-        <th>書名</th>
+        <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
         <th>分野</th>
@@ -19,7 +19,7 @@
       <% @borrowings.each do |borrowing| %>
       <tr>
         <td><%= borrowing.user.name %> </td>
-        <td><%= borrowing.stock.id%></td>
+        <td><%= sprintf("%08d", borrowing.stock.id) %></td>
         <td><%= borrowing.stock.book.title %></td>
         <td><%= borrowing.stock.book.author.author_name %> </td>
         <td><%= borrowing.stock.book.publisher.publisher_name %> </td>
@@ -46,7 +46,7 @@
       <tr>
         <th>ユーザ名</th>
         <th>取り置き図書番号</th>
-        <th>書名</th>
+        <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
         <th>分野</th>
@@ -58,7 +58,7 @@
       <% @stock_reservations.each do |stock_reservation| %>
       <tr>
         <td><%= stock_reservation.user.name %> </td>
-        <td><%= stock_reservation.stock.id %></td>
+        <td><%= sprintf("%08d", stock_reservation.stock.id) %></td>
         <td><%= stock_reservation.stock.book.title %></td>
         <td><%= stock_reservation.stock.book.author.author_name %> </td>
         <td><%= stock_reservation.stock.book.publisher.publisher_name %> </td>
@@ -83,10 +83,11 @@
     <thead>
       <tr>
         <th>ユーザ名</th>
-        <th>書名</th>
+        <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
         <th>分野</th>
+        <th>予約日時</th>
       </tr>
     </thead>
     <tbody>
@@ -97,6 +98,7 @@
         <td><%= book_reservation.book.author.author_name %> </td>
         <td><%= book_reservation.book.publisher.publisher_name %> </td>
         <td><%= book_reservation.book.genre.genre_name %></td>
+        <td><%= book_reservation.created_at %></td>
       </tr>
     </tbody>
   <% end %>

@@ -1,4 +1,4 @@
-<h1>図書館へようこそ</h1>
+<h1>FiNC図書館へようこそ</h1>
 
 <p><%= link_to "新規図書購入申請", users_new_books_path %></p>
 <p><%= link_to "あなたの貸借り履歴", users_borrowing_histories_path %></p>
@@ -26,6 +26,7 @@
         <th>出版社</th>
         <th>分野</th>
         <th>保有冊数</th>
+        <th>在庫冊数</th>
       </tr>
     </thead>
 
@@ -37,6 +38,7 @@
         <td><%= book.publisher.publisher_name %></td>
         <td><%= book.genre.genre_name %></td>
         <td><%= book.stocks.count %></td>
+        <td><%= book.remaining_stocks.count %></td>
       </tr>
     </tbody>
   <% end %>
@@ -49,6 +51,7 @@
         <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
+        <th>分野</th>
         <th>状態</th>
         <th>各種期日</th>
       </tr>
@@ -59,8 +62,9 @@
         <td><%= link_to borrowing.stock.book.title, users_book_path(borrowing.stock.book_id) %> </td>
         <td><%= borrowing.stock.book.author.author_name %></td>
         <td><%= borrowing.stock.book.publisher.publisher_name %></td>
+        <td><%= borrowing.stock.book.genre.genre_name %></td>
         <td>
-          <% if borrowing.return_at < DateTime.now %>
+          <% if borrowing.return_at > DateTime.now %>
             現在貸出中
           <% else %>
             貸出期限オーバー
@@ -75,6 +79,7 @@
         <td><%= link_to stock_reservation.stock.book.title, users_book_path(stock_reservation.stock.book_id) %> </td>
         <td><%= stock_reservation.stock.book.author.author_name %></td>
         <td><%= stock_reservation.stock.book.publisher.publisher_name %></td>
+        <td><%= stock_reservation.stock.book.genre.genre_name %></td>
         <td>現在取り置き中</td>
         <td>取り置き有効期限: <%= stock_reservation.invalid_at.to_date %></td>
       </tr>
@@ -85,6 +90,7 @@
         <td><%= link_to book_reservation.book.title, users_book_path(book_reservation.book_id) %> </td>
         <td><%= book_reservation.book.author.author_name %></td>
         <td><%= book_reservation.book.publisher.publisher_name %></td>
+        <td><%= book_reservation.book.genre.genre_name %></td>
         <td>現在予約中</td>
         <td>取り置きが始まるまでしばしお待ちください</td>
       </tr>
@@ -93,13 +99,14 @@
 </table>
 
 
-<h2>ブックマークした本一覧</h2>
+<h2>ブックマークした図書一覧</h2>
 <table rules="all">
     <thead>
       <tr>
         <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
+        <th>分野</th>
       </tr>
     </thead>
     <tbody>
@@ -108,6 +115,7 @@
         <td><%= link_to bookmark.book.title, users_book_path(bookmark.book_id) %> </td>
         <td><%= bookmark.book.author.author_name %></td>
         <td><%= bookmark.book.publisher.publisher_name %></td>
+        <td><%= bookmark.book.genre.genre_name %></td>
       </tr>
     </tbody>
   <% end %>

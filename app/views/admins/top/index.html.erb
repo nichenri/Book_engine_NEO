@@ -32,7 +32,9 @@
         <th>分野</th>
         <th>保有冊数</th>
         <th>在庫冊数</th>
-        <th>編集 削除 入荷</th>
+        <th>編集</th>
+        <th>削除</th>
+        <th>入荷</th>
       </tr>
     </thead>
 
@@ -46,8 +48,12 @@
         <td><%= book.stocks.count %></td>
         <td><%= book.remaining_stocks.count %></td>
         <td>
-          <%= link_to "編集", edit_admins_book_path(book.id) %> 
-          <%= link_to "削除", admins_book_path(book.id), method: :delete, data: {confirm: "本当に削除しますか？"} %> 
+          <%= button_to "編集", edit_admins_book_path(book.id), :method => :get %> 
+        </td>
+        <td>
+          <%= button_to "削除", admins_book_path(book.id), method: :delete, data: {confirm: "本当に削除しますか？"}, :method => :delete %> 
+        </td>
+        <td>
           <%= form_for @stock, url: admins_book_stocks_path(book.id) do |f| %> 
             <%= f.submit :入荷 %>
           <% end %>

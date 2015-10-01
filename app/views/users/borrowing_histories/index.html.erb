@@ -4,10 +4,12 @@
 
 <br>
 
-<%= search_form_for @borrowing_history_search, url: admins_borrowing_histories_path do |f| %>
+<%= search_form_for @borrowing_history_search, url: users_borrowing_histories_path do |f| %>
   <div class="field">
     <%= f.label :stock_id_eq, "貸出図書番号" %>
     <%= f.text_field :stock_id_eq %><br>
+    <%= f.label :stock_book_title_cont, "タイトル" %>
+    <%= f.text_field :stock_book_title_cont %><br>
     <%= f.label :stock_book_author_author_name_cont, "著者" %>
     <%= f.text_field :stock_book_author_author_name_cont %><br>
     <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
@@ -20,13 +22,14 @@
 
 <br>
 
-<table rules="all" border="3">
+<table rules="all">
   <thead>
     <tr>
       <th>貸出し図書番号</th>
       <th>タイトル</th>
       <th>著者</th>
       <th>出版社</th>
+      <th>分野</th>
       <th>貸出日</th>
       <th>返却日</th>
     </tr>
@@ -39,6 +42,7 @@
         <td><%= history.stock.book.title %></td>
         <td><%= history.stock.book.author.author_name %></td>
         <td><%= history.stock.book.publisher.publisher_name %></td>
+        <td><%= history.stock.book.genre.genre_name %></td>
         <td><%= history.borrowed_at.to_date %></td>
         <td><%= history.created_at.to_date %></td>
     <% end %>

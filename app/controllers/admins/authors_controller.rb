@@ -7,16 +7,18 @@ class Admins::AuthorsController < AdminsController
   end
 
   def create
-    Author.create(author_params)
-    redirect_to admins_authors_path
+    if Author.create(author_params)
+      redirect_to admins_authors_path, notice: "新たな著者を登録しました"
+    end
   end
 
   def edit
   end
 
   def update
-    @author.update(author_params) 
-    redirect_to admins_authors_path
+    if @author.update(author_params) 
+      redirect_to admins_authors_path, notice: "著者情報を更新しました"
+    end
   end
 
   def destroy
