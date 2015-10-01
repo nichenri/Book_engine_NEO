@@ -2,7 +2,7 @@
 
 <p><%= link_to "著者一覧へ戻る", admins_authors_path %></p>
 <br>
-<%= form_for @author, url: admins_publisher_path do |f| %>
+<%= form_for @author, url: admins_author_path do |f| %>
   <p>
   <%= f.label :新しい著者名 %><br>
   <%= f.text_field :author_name %>

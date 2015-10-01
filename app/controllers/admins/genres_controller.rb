@@ -1,6 +1,5 @@
-class Admins::GenresController < Admins::ApplicationController
+class Admins::GenresController < AdminsController
   before_action :set_genre, only: [:edit, :update, :destroy] 
-  before_action :set_admin, only: [:create, :update, :destroy]
 
   def index
     @genres = Genre.all
@@ -8,11 +7,8 @@ class Admins::GenresController < Admins::ApplicationController
   end
 
   def create
-    @genre = Genre.new(genre_params)
-    if @genre.save 
-      redirect_to admins_genres_path
-    else 
-      render 'new'
+    if Genre.create(genre_params)
+      redirect_to admins_genres_path, notice: "新たな分野を追加しました"
     end
   end
 
@@ -21,9 +17,7 @@ class Admins::GenresController < Admins::ApplicationController
 
   def update
     if @genre.update(genre_params) 
-      redirect_to admins_genres_path
-    else 
-      render 'edit'
+      redirect_to admins_genres_path, notice: "分野情報を更新しました"
     end
   end
 
@@ -33,10 +27,6 @@ class Admins::GenresController < Admins::ApplicationController
   end
 
   private
-
-    def set_admin
-      @admin = current_admin
-    end
 
     def genre_params
       params.require(:genre).permit(:genre_name)

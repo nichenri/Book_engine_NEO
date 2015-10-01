@@ -1,12 +1,10 @@
-class Admins::BooksController < Admins::ApplicationController
+class Admins::BooksController < AdminsController
   before_action :set_book,  only: [:edit, :update, :destroy]
-  before_action :set_admin, only: [:create, :update, :destroy]
+  before_action :set_admin, only: [:new, :create, :update, :destroy]
 
   def show
-    @book = Book.find(params[:id])
-    @stocks = @book.stocks
-    @reviews = @book.reviews.where(params[:id])
-    @bookmarks = @book.bookmarks.where(params[:id])
+    @book = Book.includes(:author, :publisher, :genre, stocks: [borrowing: [:user], stock_reservation: [:user]]).find(params[:id])
+    @reviews = @book.reviews.where(params[:id]).includes(:user)
   end
 
   def new
@@ -14,11 +12,8 @@ class Admins::BooksController < Admins::ApplicationController
   end
 
   def create 
-    @book = Book.new(book_params)
-    if @book.save 
-      redirect_to admins_top_index_path(@admin.id)
-    else 
-      render 'new'
+    if Book.create(book_params)
+      redirect_to admins_top_index_path(@admin.id), notice: "新たな本を追加しました"
     end
   end
 
@@ -27,15 +22,13 @@ class Admins::BooksController < Admins::ApplicationController
 
   def update
     if @book.update(book_params) 
-      redirect_to admins_top_index_path(@admin.id)
-    else 
-      render 'edit'
+      redirect_to admins_top_index_path(@admin.id), notice: "図書情報を更新しました"
     end
   end
 
   def destroy
     @book.destroy
-    redirect_to admins_top_index_path(@admin.id)
+    redirect_to admins_top_index_path(@admin.id), notice: "図書情報を削除しました"
   end
 
   private

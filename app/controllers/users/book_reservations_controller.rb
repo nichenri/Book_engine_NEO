@@ -1,19 +1,15 @@
-class Users::BookReservationsController < Users::ApplicationController
+class Users::BookReservationsController < UsersController
 
   before_action :set_book
 
   def create 
-    @book_reservation = @book.book_reservations.new(user_id: current_user.id)
-    if @book_reservation.save
-      redirect_to users_book_path(@book.id)
-    else 
-      render 'new'
-    end
+    @book.book_reservations.create(user_id: current_user.id)
+    redirect_to users_book_path(@book.id)
   end
 
   def destroy
-    @book_reservation = @user.book_reservation.find(params[:id])
-    @book_reservation.destroy
+    @user = current_user
+    @user.book_reservations.find(params[:id]).destroy
     redirect_to users_book_path(@book.id)
   end
 

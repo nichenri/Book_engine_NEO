@@ -11,18 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928095608) do
-
-  create_table "addition_histories", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "new_book_id", limit: 4
-    t.boolean  "status"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "addition_histories", ["new_book_id"], name: "index_addition_histories_on_new_book_id", using: :btree
-  add_index "addition_histories", ["user_id"], name: "index_addition_histories_on_user_id", using: :btree
+ActiveRecord::Schema.define(version: 20150928095537) do
 
   create_table "additions", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
@@ -33,8 +22,6 @@ ActiveRecord::Schema.define(version: 20150928095608) do
 
   add_index "additions", ["new_book_id"], name: "index_additions_on_new_book_id", using: :btree
   add_index "additions", ["user_id"], name: "index_additions_on_user_id", using: :btree
-
-ActiveRecord::Schema.define(version: 20150928095304) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -185,8 +172,6 @@ ActiveRecord::Schema.define(version: 20150928095304) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "addition_histories", "new_books"
-  add_foreign_key "addition_histories", "users"
   add_foreign_key "additions", "new_books"
   add_foreign_key "additions", "users"
   add_foreign_key "book_reservations", "books"

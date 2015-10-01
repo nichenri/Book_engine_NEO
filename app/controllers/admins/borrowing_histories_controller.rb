@@ -1,8 +1,8 @@
-class Admins::BorrowingHistoriesController < Admins::ApplicationController
+class Admins::BorrowingHistoriesController < AdminsController
 
   def index
     @borrowing_history_search = BorrowingHistory.search(params[:q])
-    @borrowing_histories = @borrowing_history_search.result
+    @borrowing_histories = @borrowing_history_search.result.includes(:user, stock: [ book: [:author, :publisher, :genre] ] )
   end
 
   def create

@@ -2,20 +2,6 @@
 <p><%= link_to "図書検索画面へ", admins_top_index_path %></p>
 
 <h3>現在承認待ちの図書</h3>
-<%= search_form_for @addition_search, url: admins_new_books_path do |f| %>
-  <div class="field">
-    <%= f.label :user_name_cont, "ユーザ名" %>
-    <%= f.text_field :user_name_cont %><br>
-    <%= f.label :new_book_title_cont, "タイトル" %>
-    <%= f.text_field :new_book_title_cont %><br>
-    <%= f.label :new_book_author_cont, "著者" %>
-    <%= f.text_field :new_book_author_cont %><br>
-    <%= f.label :new_book_publisher, "出版社" %>
-    <%= f.text_field :new_book_publisher_cont %><br>
-  </div>
-  <div class="actions"><%= f.submit "Search" %></div>
-<% end %>
-
 
 <table rules="all">
     <thead>
