@@ -5,13 +5,13 @@
 
 
 <% if @user_bookmark %>
-  <%= link_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "Are you sure?"} %><br>
+  <%= button_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "ブックマークを取り消しますか?"}, :method => :delete %>
 <% else %>
   <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
-  <%= f.submit :ブックマークに入れる %>
-    <br>
+    <%= f.submit :ブックマークに入れる %>
   <% end %>
 <% end %>
+<br>
 
 
 <table rules="all" border="3">
@@ -44,19 +44,22 @@
             <%= sprintf("%08d", stock.id) %>
             <%= status(stock) %>
           <% end %>
+          </li>
+
           <br>
 
-
           <% if @user.stock_borrow(@stocks) %>
-            返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
+            現在<%= sprintf("%08d", @user.stock_borrow(@stocks).stock_id) %>を貸出中<br>
+          　返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
           <% else %>
             <% if @user.stock_reserv(@stocks) %>
-              取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%>
-              <%= link_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"} %>
+              現在<%= sprintf("%08d", @user.stock_reserv(@stocks).stock_id) %>を取り置き中<br>
+              取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%><br>
+              <%= button_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
             <% else %>
               <% if @user.book_reserv(@book) %>
                 現在予約中です。後日また連絡いたします。<br>
-                <%= link_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"} %>
+                <%= button_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
               <% else %>
                 <% unless @book.remaining_stocks.first %>
                   <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
@@ -70,7 +73,6 @@
               <% end %>
             <% end %>
           <% end %>
-        </li>
       </ul>
     </td>
   </tr>
@@ -79,13 +81,13 @@
 
 <h3>この本に対するレビュー一覧</h3>
 <ul>
-  <% @reviews.each do |review| %>
+  <% @book.reviews.each do |review| %>
     <li>
       <%= review.user.name %> |
       <%= review.updated_at %> 
       <% if review.user_id == @user.id %>
         <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
-        <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "Are you sure?"} %>
+        <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "レビューを本当に削除しますか?"} %>
       <% end %><br>
       <%= review.content %>
     </li>
@@ -101,3 +103,11 @@
     </p>
     <% end %>
 </ul>
+
+<h3>この本を借りた人一覧</h3>
+<ul>
+  <% @book.borrowing_records.each do |borrowing_record| %>
+    <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
+  <% end %>
+</ul>
+

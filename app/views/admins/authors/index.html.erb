@@ -21,7 +21,8 @@
       <tr>
         <th>著者名</th>
         <th>更新日時</th>
-        <th>編集 削除</th>
+        <th>編集</th>
+        <th>削除</th>
       </tr>
     </thead>
 
@@ -31,8 +32,10 @@
         <td><%= author.author_name %> </td>
         <td><%= author.updated_at %></td>
         <td>
-            <%= link_to "編集", edit_admins_author_path(author.id) %>
-            <%= link_to "削除", admins_author_path(author.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+          <%= button_to "編集", edit_admins_author_path(author.id), :method => :get %>
+        </td>
+        <td>
+          <%= button_to "削除", admins_author_path(author.id), method: :delete, data: {confirm: "本当に削除しますか？"}, :method => :delete %>
         </td>
       </tr>
     </tbody>

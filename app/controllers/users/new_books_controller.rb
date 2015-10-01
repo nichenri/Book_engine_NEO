@@ -1,6 +1,7 @@
-class Users::NewBooksController < Users::ApplicationController
+class Users::NewBooksController < UsersController
 
-  def new
+  def index 
+    @user = User.includes(additions: [:new_book], addition_histories: [:new_book]).order("additions.created_at DESC").order("addition_histories.created_at DESC").find(current_user)
     @new_book = NewBook.new
   end
 
@@ -8,8 +9,10 @@ class Users::NewBooksController < Users::ApplicationController
     @new_book = NewBook.new(new_book_params)
     @new_book.additions.build(user_id: current_user.id)
     @new_book.save
-    redirect_to new_users_new_book_path
+    redirect_to users_new_books_path, notice: "新規図書購入申し込み承りました"
   end
+
+
 
 
   private 

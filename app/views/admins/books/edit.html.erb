@@ -12,22 +12,16 @@
   <p>
   <%= f.label :図書の著者 %><br>
   <%= f.collection_select :author_id, Author.all, :id, :author_name %><br>
-  選択肢になければこちらから新たな著者の追加を。<br>
-  <%= link_to "著者の追加", admins_authors_path %>
   </p>
 
   <p>
   <%= f.label :図書の出版社 %><br>
   <%= f.collection_select :publisher_id, Publisher.all, :id, :publisher_name %><br>
-  選択肢になければこちらから新たな出版社の追加を。<br>
-  <%= link_to "出版社の追加", admins_publishers_path %>
   </p>
 
   <p>
   <%= f.label :図書の分野 %><br>
   <%= f.collection_select :genre_id, Genre.all, :id, :genre_name %><br>
-  選択肢になければこちらから新たな分野の追加を。<br>
-  <%= link_to "分野の追加", admins_genres_path %>
   </p>
 
   <p>

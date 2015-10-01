@@ -1,2 +1,0 @@
-class AdditionHistoriesController < ApplicationController
-end

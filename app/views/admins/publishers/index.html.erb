@@ -20,7 +20,8 @@
       <tr>
         <th>出版社名</th>
         <th>更新日時</th>
-        <th>編集 削除</th>
+        <th>編集</th>
+        <th>削除</th>
       </tr>
     </thead>
 
@@ -30,8 +31,10 @@
         <td><%= publisher.publisher_name %> </td>
         <td><%= publisher.updated_at %></td>
         <td>
-            <%= link_to "編集", edit_admins_publisher_path(publisher.id) %>
-            <%= link_to "削除", admins_publisher_path(publisher.id), method: :delete, data: {confirm: "本当に削除しますか？"} %>
+          <%= button_to "編集", edit_admins_publisher_path(publisher.id), :method => :get %>
+        </td>
+        <td>
+          <%= button_to "削除", admins_publisher_path(publisher.id), method: :delete, data: {confirm: "本当に削除しますか？"}, :method => :delete %>
         </td>
       </tr>
     </tbody>

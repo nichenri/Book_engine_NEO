@@ -1,7 +1,5 @@
-class Admins::PublishersController < Admins::ApplicationController
+class Admins::PublishersController < AdminsController
   before_action :set_publisher, only: [:edit, :update, :destroy] 
-  before_action :set_admin, only: [:create, :update, :destroy]
-
 
   def index
     @publishers = Publisher.all
@@ -9,11 +7,8 @@ class Admins::PublishersController < Admins::ApplicationController
   end
 
   def create
-    @publisher = Publisher.new(publisher_params)
-    if @publisher.save 
-      redirect_to admins_publishers_path
-    else 
-      render 'new'
+    if Publisher.create(publisher_params)
+      redirect_to admins_publishers_path, notice: "新たな出版社を追加しました"
     end
   end
 
@@ -22,9 +17,7 @@ class Admins::PublishersController < Admins::ApplicationController
 
   def update
     if @publisher.update(publisher_params) 
-      redirect_to admins_publishers_path
-    else 
-      render 'edit'
+      redirect_to admins_publishers_path, notice: "出版社情報を更新しました"
     end
   end
 
@@ -35,10 +28,6 @@ class Admins::PublishersController < Admins::ApplicationController
 
 
   private
-
-    def set_admin
-      @admin = current_admin
-    end
 
     def publisher_params
       params.require(:publisher).permit(:publisher_name)

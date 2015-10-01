@@ -1,16 +1,15 @@
-class Users::BooksController < Users::ApplicationController
+class Users::BooksController < UsersController
   before_action :set_book,  only: [:show]
 
   def show
     @user = current_user
-    @book = Book.find(params[:id])
+    @book = Book.includes(:author, :genre, :publisher, reviews: [:user]).find(params[:id])
     @bookmark = Bookmark.new
     @user_bookmark = @book.bookmarks.find_by(user_id: @user.id)
     @review = Review.new
-    @reviews = @book.reviews
     @book_reservation = BookReservation.new
     @stock_reservation = StockReservation.new
-    @stocks = @book.stocks
+    @stocks = @book.stocks.includes(:borrowing, :stock_reservation)
   end
 
 

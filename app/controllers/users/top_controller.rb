@@ -1,11 +1,8 @@
-class Users::TopController < Users::ApplicationController
+class Users::TopController < UsersController
   def index
-    @user = current_user
+    @user = User.includes(stock_reservations: [stock: [book: [:author, :publisher, :genre]]], book_reservations: [book: [:author, :publisher, :genre]], borrowings: [stock: [book: [:author, :publisher, :genre]]]).find(current_user.id) 
     @book_search = Book.search(params[:q])
-    @books = @book_search.result
-    @bookmarks = Bookmark.where(user_id: @user.id)
-    @stock_reservations = @user.stock_reservations.all
-    @book_reservations = @user.book_reservations.all
-    @borrowings = @user.borrowings.all
+    @books = @book_search.result.includes(:author, :publisher, :genre)
+    @bookmarks = Bookmark.where(user_id: @user.id).includes(book: [:author, :publisher, :genre])
   end
 end

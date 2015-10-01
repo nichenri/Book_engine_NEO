@@ -29,9 +29,9 @@
 
   <tr>
     <td>図書館保有状況</td>
-    <td>合計保有数: <%= @stocks.count %><br>
+    <td>合計保有数: <%= @book.stocks.count %><br>
     <ul>
-      <% @stocks.each do |stock| %>
+      <% @book.stocks.each do |stock| %>
         <li>
           <%= sprintf("%08d", stock.id) %>
           <%= status_for_admins(stock) %>

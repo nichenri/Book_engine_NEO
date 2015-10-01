@@ -1,2 +1,2 @@
-class Users::BorrowingsController < Users::ApplicationController
+class Users::BorrowingsController < UsersController
 end

@@ -19,6 +19,7 @@
         <th>タイトル</th>
         <th>著者</th>
         <th>出版社</th>
+        <th>分野</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
         <td><%= bookmark.book.title %></td>
         <td><%= bookmark.book.author.author_name %></td>
         <td><%= bookmark.book.publisher.publisher_name %></td>
+        <td><%= bookmark.book.genre.genre_name %></td>
       </tr>
     </tbody>
   <% end %>

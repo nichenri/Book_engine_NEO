@@ -1,4 +1,4 @@
-class Admins::AuthorsController < Admins::ApplicationController
+class Admins::AuthorsController < AdminsController
   before_action :set_author, only: [:edit, :update, :destroy] 
 
   def index
@@ -7,12 +7,8 @@ class Admins::AuthorsController < Admins::ApplicationController
   end
 
   def create
-    @admin = current_admin
-    @author = Author.new(author_params)
-    if @author.save 
-      redirect_to admins_authors_path
-    else 
-      render 'new'
+    if Author.create(author_params)
+      redirect_to admins_authors_path, notice: "新たな著者を登録しました"
     end
   end
 
@@ -20,17 +16,14 @@ class Admins::AuthorsController < Admins::ApplicationController
   end
 
   def update
-    @admin = current_admin
     if @author.update(author_params) 
-      redirect_to admins_authors_path
-    else 
-      render 'edit'
+      redirect_to admins_authors_path, notice: "著者情報を更新しました"
     end
   end
 
   def destroy
     @author.destroy
-      redirect_to admins_authors_path
+    redirect_to admins_authors_path
   end
 
   private
