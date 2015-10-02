@@ -3,8 +3,12 @@
 <div class="navbar navbar-default">
   <div class="navbar-inner">
     <ul class="nav">
-<li><%= link_to "図書検索画面", admins_top_index_path %></li>
-<li><%= link_to "図書情報の編集", edit_admins_book_path(@book.id)%></li>
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加", new_admins_book_path %></li>
+      <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
+      <li><%= link_to "ブックマーク", admins_bookmarks_path %></li>
+      <li><%= link_to "貸借り履歴", admins_borrowing_histories_path %></li>
+      <li><%= link_to "貸借り/予約状況", admins_borrowings_path %></li>
     </ul>
   </div>
 </div>
@@ -14,7 +18,10 @@
 <table class="table table-striped" border="3">
   <tr>
     <td>タイトル</td>
-    <td><strong><%= @book.title %></strong></td>
+    <td>
+      <strong><%= @book.title %></strong>
+      <%= button_to "図書情報の編集", edit_admins_book_path(@book.id), :method => :edit %>
+    </td>
   </tr>
 
   <tr>

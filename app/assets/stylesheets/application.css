@@ -38,6 +38,22 @@ h3 {
   margin-left: 60px;
 }
 
+.btn-group {
+  background: silver;
+}
+
+.btn {
+  background: silver;
+  color: rgb(66, 139, 202);
+  font-weight: bold;
+  height: 40px;
+}
+
+.now {
+  background: silver;
+  font-weight: bold;
+}
+
 .notice {
   color: gray;
   margin-left: 10px;
