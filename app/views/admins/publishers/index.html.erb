@@ -1,43 +1,49 @@
-<h2> 出版社の追加 </h2>
+<h1> 出版社の追加 </h1>
 
-<p><%= link_to "管理者画面へ戻る", admins_top_index_path %></p>
-<p><%= link_to "図書追加画面へ戻る", new_admins_book_path %></p>
-<br>
-<%= form_for @publisher, url:admins_publishers_path  do |f| %>
-  <p>
-  <%= f.label :新しい出版社名 %><br>
-  <%= f.text_field :publisher_name %>
-  </p>
+<div class="navbar navbar-default">
+  <div class= "navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "管理者画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加画面", new_admins_book_path %></li>
+    </ul>
+  </div>
+</div><br>
 
-  <p>
-  <%= f.submit :出版社の追加 %>
-  </p>
+<div class="nature_create">
+  <%= form_for @publisher, url:admins_publishers_path  do |f| %>
 
-<% end %>
+    <%= f.label :出版社名 %>
+    <%= f.text_field :publisher_name %>
+    <%= f.submit :出版社の追加 %>
 
-<table rules="all">
+  <% end %>
+</div><br><br>
+
+<div class="nature_container">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>出版社名</th>
         <th>更新日時</th>
-        <th>編集</th>
-        <th>削除</th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
 
     <tbody>
       <% @publishers.each do |publisher| %>
-      <tr>
-        <td><%= publisher.publisher_name %> </td>
-        <td><%= publisher.updated_at %></td>
-        <td>
-          <%= button_to "編集", edit_admins_publisher_path(publisher.id), :method => :get %>
-        </td>
-        <td>
-          <%= button_to "削除", admins_publisher_path(publisher.id), method: :delete, data: {confirm: "本当に削除しますか？"}, :method => :delete %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= publisher.publisher_name %> </td>
+          <td><%= publisher.updated_at %></td>
+          <td>
+            <%= button_to "編集", edit_admins_publisher_path(publisher.id), :method => :get %>
+          </td>
+          <td>
+            <%= button_to "削除", admins_publisher_path(publisher.id), method: :delete, data: {confirm: "本当に削除しますか？"}, :method => :delete %>
+          </td>
+        </tr>
     </tbody>
   <% end %>
-</table>
+  </table>
+</div>
 

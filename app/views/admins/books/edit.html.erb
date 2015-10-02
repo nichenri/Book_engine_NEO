@@ -1,31 +1,38 @@
-<h2> 図書情報の編集 </h2>
+<h1> 図書情報の編集 </h1>
 
-<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
-<br>
-<%= form_for @book, url: admins_book_path do |f| %>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+    </ul>
+  </div>
+</div>
 
-  <p>
-  <%= f.label :図書タイトル %><br>
-  <%= f.text_field :title %>
-  </p>
+<div class="editer_container">
+  <%= form_for @book, url: admins_book_path do |f| %>
 
-  <p>
-  <%= f.label :図書の著者 %><br>
-  <%= f.collection_select :author_id, Author.all, :id, :author_name %><br>
-  </p>
+    <p>
+    <%= f.label :タイトル %>
+    <%= f.text_field :title %>
+    </p>
 
-  <p>
-  <%= f.label :図書の出版社 %><br>
-  <%= f.collection_select :publisher_id, Publisher.all, :id, :publisher_name %><br>
-  </p>
+    <p>
+    <%= f.label :著者 %>
+    <%= f.collection_select :author_id, Author.all, :id, :author_name %><br>
+    </p>
 
-  <p>
-  <%= f.label :図書の分野 %><br>
-  <%= f.collection_select :genre_id, Genre.all, :id, :genre_name %><br>
-  </p>
+    <p>
+    <%= f.label :出版社 %>
+    <%= f.collection_select :publisher_id, Publisher.all, :id, :publisher_name %>
+    </p>
 
-  <p>
-  <%= f.submit :図書情報の更新 %>
-  </p>
+    <p>
+    <%= f.label :分野 %>
+    <%= f.collection_select :genre_id, Genre.all, :id, :genre_name %>
+    </p><br>
 
-<% end %>
+    <div class="editer_button">
+      <%= f.submit :図書情報の更新 %>
+    </div>
+
+  <% end %>

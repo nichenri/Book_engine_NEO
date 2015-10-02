@@ -5,7 +5,7 @@
 
 <h2>図書一覧</h2>
 <%= search_form_for @book_search, url: users_top_index_path do |f| %>
-  <div class="field">
+  <div class="search_field">
     <%= f.label :title_cont, "タイトル" %>
     <%= f.text_field :title_cont %><br>
     <%= f.label :author_author_name_cont, "著者" %>
@@ -18,7 +18,8 @@
   <div class="actions"><%= f.submit "Search" %></div>
 <% end %>
 
-<table rules="all">
+<div class="container">
+<table class="table table-striped">
     <thead>
       <tr>
         <th>タイトル</th>
@@ -43,6 +44,7 @@
     </tbody>
   <% end %>
 </table>
+</div>
 
 <h2>現在予約している図書一覧</h2>
 <table rules="all">

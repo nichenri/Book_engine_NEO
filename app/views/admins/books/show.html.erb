@@ -1,12 +1,17 @@
-<h2> 詳細情報 </h2>
+<h1> 詳細情報 </h1>
 
-<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
-<p><%= link_to "この図書情報の編集", edit_admins_book_path(@book.id)%></p>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+<li><%= link_to "図書検索画面", admins_top_index_path %></li>
+<li><%= link_to "図書情報の編集", edit_admins_book_path(@book.id)%></li>
+    </ul>
+  </div>
+</div>
 
-<br>
-
-
-<table rules="all" border="3">
+<h2>詳細情報</h2><br>
+<div class="container">
+<table class="table table-striped" border="3">
   <tr>
     <td>タイトル</td>
     <td><strong><%= @book.title %></strong></td>
@@ -40,8 +45,9 @@
     </ul></td>
   </tr>
 </table>
+</div><br>
 
-<h3>この本に対するレビュー一覧</h3>
+<h2>この本に対するレビュー一覧</h2>
 <ul>
   <% @reviews.each do |review| %>
     <li>

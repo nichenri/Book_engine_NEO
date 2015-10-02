@@ -1,37 +1,44 @@
-<h2> 新しい本の追加 </h2>
+<h1> 図書の追加 </h1>
 
-<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
-<br>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "著者の追加", admins_authors_path %></li>
+      <li><%= link_to "出版社の追加", admins_publishers_path %></li>
+      <li><%= link_to "分野の追加", admins_genres_path %></li>
+    </ul>
+  </div>
+</div>
+
+<p class="admins_new_books">著者・出版社・分野が以下の選択肢にない場合は上のタブから追加してください。</p><br>
+
+<div class="editer_container">
 <%= form_for @book, url: admins_books_path do |f| %>
 
   <p>
-  <%= f.label :新しい本のタイトル %><br>
+  <%= f.label :タイトル %>
   <%= f.text_field :title %>
   </p>
 
   <p>
-  <%= f.label :新しい本の著者 %><br>
-  <%= f.collection_select :author_id, Author.all, :id, :author_name %><br>
-  選択肢になければこちらから新たな著者の追加を。<br>
-  <%= link_to "著者の追加", admins_authors_path %>
+  <%= f.label :著者 %>
+  <%= f.collection_select :author_id, Author.all, :id, :author_name %>
   </p>
 
   <p>
-  <%= f.label :新しい本の出版社 %><br>
-  <%= f.collection_select :publisher_id, Publisher.all, :id, :publisher_name %><br>
-  選択肢になければこちらから新たな出版社の追加を。<br>
-  <%= link_to "出版社の追加", admins_publishers_path %>
+  <%= f.label :出版社 %>
+  <%= f.collection_select :publisher_id, Publisher.all, :id, :publisher_name %>
   </p>
 
   <p>
-  <%= f.label :新しい本の分野 %><br>
-  <%= f.collection_select :genre_id, Genre.all, :id, :genre_name %><br>
-  選択肢になければこちらから新たな分野の追加を。<br>
-  <%= link_to "分野の追加", admins_genres_path %>
-  </p>
+  <%= f.label :分野 %>
+  <%= f.collection_select :genre_id, Genre.all, :id, :genre_name %>
+  </p><br>
 
-  <p>
+  <div class="editer_button">
   <%= f.submit :本の追加 %>
-  </p>
+  </div>
 
 <% end %>
+</div>
