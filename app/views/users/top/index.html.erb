@@ -1,125 +1,135 @@
-<h1>FiNC図書館へようこそ</h1>
+<h1>FiNC図書館へようこそ</h1><br>
 
-<p><%= link_to "新規図書購入申請", users_new_books_path %></p>
-<p><%= link_to "あなたの貸借り履歴", users_borrowing_histories_path %></p>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li><%= link_to "貸借り履歴", users_borrowing_histories_path %></li>
+    </ul>
+  </div>
+</div>
 
-<h2>図書一覧</h2>
+<h2>図書検索</h2><br>
+
 <%= search_form_for @book_search, url: users_top_index_path do |f| %>
   <div class="search_field">
     <%= f.label :title_cont, "タイトル" %>
-    <%= f.text_field :title_cont %><br>
+    <%= f.text_field :title_cont %><br><br>
     <%= f.label :author_author_name_cont, "著者" %>
-    <%= f.text_field :author_author_name_cont %><br>
+    <%= f.text_field :author_author_name_cont %><br><br>
     <%= f.label :publisher_publisher_name_cont, "出版社" %>
-    <%= f.text_field :publisher_publisher_name_cont %><br>
+    <%= f.text_field :publisher_publisher_name_cont %><br><br>
     <%= f.label :genre_genre_name_cont, "分野" %>
-    <%= f.text_field :genre_genre_name_cont %><br>
+    <%= f.text_field :genre_genre_name_cont %><br><br>
+    <div class="search_actions"><%= f.submit "Search" %></div>
+  <% end %>
+  </div><br>
+
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>分野</th>
+          <th>保有冊数</th>
+          <th>在庫冊数</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+            <td><%= link_to book.title, users_book_path(book.id) %> </td>
+            <td><%= book.author.author_name %></td>
+            <td><%= book.publisher.publisher_name %></td>
+            <td><%= book.genre.genre_name %></td>
+            <td><%= book.stocks.count %></td>
+            <td><%= book.remaining_stocks.count %></td>
+          </tr>
+      </tbody>
+    <% end %>
+    </table>
+  </div><br>
+
+  <h2>現在予約している図書一覧</h2>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>分野</th>
+          <th>状態</th>
+          <th>各種期日</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user.borrowings.each do |borrowing| %>
+          <tr>
+            <td><%= link_to borrowing.stock.book.title, users_book_path(borrowing.stock.book_id) %> </td>
+            <td><%= borrowing.stock.book.author.author_name %></td>
+            <td><%= borrowing.stock.book.publisher.publisher_name %></td>
+            <td><%= borrowing.stock.book.genre.genre_name %></td>
+            <td>
+              <% if borrowing.return_at > DateTime.now %>
+                現在貸出中
+              <% else %>
+                貸出期限オーバー
+              <% end %>
+            </td>
+            <td>返却期限: <%= borrowing.return_at.to_date %></td>
+          </tr>
+        <% end %>
+
+        <% @user.stock_reservations.each do |stock_reservation| %>
+          <tr>
+            <td><%= link_to stock_reservation.stock.book.title, users_book_path(stock_reservation.stock.book_id) %> </td>
+            <td><%= stock_reservation.stock.book.author.author_name %></td>
+            <td><%= stock_reservation.stock.book.publisher.publisher_name %></td>
+            <td><%= stock_reservation.stock.book.genre.genre_name %></td>
+            <td>現在取り置き中</td>
+            <td>取り置き有効期限: <%= stock_reservation.invalid_at.to_date %></td>
+          </tr>
+        <% end %>
+
+        <% @user.book_reservations.each do |book_reservation| %>
+          <tr>
+            <td><%= link_to book_reservation.book.title, users_book_path(book_reservation.book_id) %> </td>
+            <td><%= book_reservation.book.author.author_name %></td>
+            <td><%= book_reservation.book.publisher.publisher_name %></td>
+            <td><%= book_reservation.book.genre.genre_name %></td>
+            <td>現在予約中</td>
+            <td>取り置きが始まるまでしばしお待ちください</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div><br><br>
+
+
+  <h2>ブックマークした図書一覧</h2>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>タイトル</th>
+          <th>著者</th>
+          <th>出版社</th>
+          <th>分野</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bookmarks.each do |bookmark| %>
+          <tr>
+            <td><%= link_to bookmark.book.title, users_book_path(bookmark.book_id) %> </td>
+            <td><%= bookmark.book.author.author_name %></td>
+            <td><%= bookmark.book.publisher.publisher_name %></td>
+            <td><%= bookmark.book.genre.genre_name %></td>
+          </tr>
+      </tbody>
+    <% end %>
+    </table>
   </div>
-  <div class="actions"><%= f.submit "Search" %></div>
-<% end %>
-
-<div class="container">
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th>タイトル</th>
-        <th>著者</th>
-        <th>出版社</th>
-        <th>分野</th>
-        <th>保有冊数</th>
-        <th>在庫冊数</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @books.each do |book| %>
-      <tr>
-        <td><%= link_to book.title, users_book_path(book.id) %> </td>
-        <td><%= book.author.author_name %></td>
-        <td><%= book.publisher.publisher_name %></td>
-        <td><%= book.genre.genre_name %></td>
-        <td><%= book.stocks.count %></td>
-        <td><%= book.remaining_stocks.count %></td>
-      </tr>
-    </tbody>
-  <% end %>
-</table>
-</div>
-
-<h2>現在予約している図書一覧</h2>
-<table rules="all">
-    <thead>
-      <tr>
-        <th>タイトル</th>
-        <th>著者</th>
-        <th>出版社</th>
-        <th>分野</th>
-        <th>状態</th>
-        <th>各種期日</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @user.borrowings.each do |borrowing| %>
-      <tr>
-        <td><%= link_to borrowing.stock.book.title, users_book_path(borrowing.stock.book_id) %> </td>
-        <td><%= borrowing.stock.book.author.author_name %></td>
-        <td><%= borrowing.stock.book.publisher.publisher_name %></td>
-        <td><%= borrowing.stock.book.genre.genre_name %></td>
-        <td>
-          <% if borrowing.return_at > DateTime.now %>
-            現在貸出中
-          <% else %>
-            貸出期限オーバー
-          <% end %>
-        </td>
-        <td>返却期限: <%= borrowing.return_at.to_date %></td>
-      </tr>
-      <% end %>
-
-      <% @user.stock_reservations.each do |stock_reservation| %>
-      <tr>
-        <td><%= link_to stock_reservation.stock.book.title, users_book_path(stock_reservation.stock.book_id) %> </td>
-        <td><%= stock_reservation.stock.book.author.author_name %></td>
-        <td><%= stock_reservation.stock.book.publisher.publisher_name %></td>
-        <td><%= stock_reservation.stock.book.genre.genre_name %></td>
-        <td>現在取り置き中</td>
-        <td>取り置き有効期限: <%= stock_reservation.invalid_at.to_date %></td>
-      </tr>
-      <% end %>
-
-      <% @user.book_reservations.each do |book_reservation| %>
-      <tr>
-        <td><%= link_to book_reservation.book.title, users_book_path(book_reservation.book_id) %> </td>
-        <td><%= book_reservation.book.author.author_name %></td>
-        <td><%= book_reservation.book.publisher.publisher_name %></td>
-        <td><%= book_reservation.book.genre.genre_name %></td>
-        <td>現在予約中</td>
-        <td>取り置きが始まるまでしばしお待ちください</td>
-      </tr>
-      <% end %>
-    </tbody>
-</table>
-
-
-<h2>ブックマークした図書一覧</h2>
-<table rules="all">
-    <thead>
-      <tr>
-        <th>タイトル</th>
-        <th>著者</th>
-        <th>出版社</th>
-        <th>分野</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @bookmarks.each do |bookmark| %>
-      <tr>
-        <td><%= link_to bookmark.book.title, users_book_path(bookmark.book_id) %> </td>
-        <td><%= bookmark.book.author.author_name %></td>
-        <td><%= bookmark.book.publisher.publisher_name %></td>
-        <td><%= bookmark.book.genre.genre_name %></td>
-      </tr>
-    </tbody>
-  <% end %>
-</table>
-

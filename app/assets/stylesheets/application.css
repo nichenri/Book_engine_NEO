@@ -19,6 +19,7 @@ h1 {
   font-size: 33px;
   font-weight: bold;
   margin-left: 30px;
+  margin-top: 30px;
 }
 
 h2 {
@@ -35,6 +36,12 @@ h3 {
   color: navy;
   font-weight: bold;
   margin-left: 60px;
+}
+
+.notice {
+  color: gray;
+  margin-left: 10px;
+  margin-right: 500px;
 }
 
 .nav > li {

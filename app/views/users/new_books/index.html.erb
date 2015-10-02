@@ -1,42 +1,48 @@
-<h1>新規図書購入申請一覧</h1>
+<h1>新規図書購入リクエスト</h1><br>
 
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", users_top_index_path %></li>
+    </ul>
+  </div>
+</div>
 
-<p><%= link_to "図書検索画面へ", users_top_index_path %></p>
-
-<h3> 新規図書購入希望申し込みフォーム </h3>
-
-<%= form_for @new_book, url: users_new_books_path do |f| %>
-  <p>
-    <%= f.label :欲しい本のタイトル %><br>
+<h2>新規図書購入リクエストフォーム</h2><br>
+<div class="search_field">
+  <%= form_for @new_book, url: users_new_books_path do |f| %>
+    <p>
+    <%= f.label :タイトル %>
     <%= f.text_field :title %>
-  </p>
+    </p>
 
-  <p>
-    <%= f.label :欲しい本の著者 %><br>
+    <p>
+    <%= f.label :著者 %>
     <%= f.text_field :author %>
-  </p>
+    </p>
 
-  <p>
-    <%= f.label :欲しい本の出版社 %><br>
+    <p>
+    <%= f.label :出版社 %>
     <%= f.text_field :publisher %>
-  </p>
+    </p>
 
-  <p>
-    <%= f.submit :本の追加 %>
-  </p>
-  <%= f.fields_for @new_book.additions do |df| %>
+    <div class="search_actions">
+      <%= f.submit :送信 %>
+    </div>
+
+    <%= f.fields_for @new_book.additions do |df| %>
+    <% end %>
   <% end %>
-<% end %>
+</div><br>
 
-
-<h3>あなたの出した新規図書購入申請</h3>
-
-<table rules="all">
+<h2>新規図書購入リクエスト履歴</h2>
+<div class="container">
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th>申請書タイトル</th>
-        <th>申請書著者</th>
-        <th>申請書出版社</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
         <th>申請日</th>
         <th>現在の状態</th>
         <th>申し込みの取り消し</th>
@@ -49,7 +55,7 @@
           <td><%= addition.new_book.title %></td>
           <td><%= addition.new_book.author %> </td>
           <td><%= addition.new_book.publisher %> </td>
-          <td><%= addition.created_at %></td>
+          <td><%= addition.created_at.to_date %></td>
           <td>現在承認中</td>
           <td><%= link_to "図書購入申請の取り消し", users_addition_path(addition.id), method: :delete, data: {confirm: "申し込みを取り消しますか?"} %></td>
         </tr>
@@ -60,7 +66,7 @@
           <td><%= addition_history.new_book.title %></td>
           <td><%= addition_history.new_book.author %> </td>
           <td><%= addition_history.new_book.publisher %> </td>
-          <td><%= addition_history.created_at %></td>
+          <td><%= addition_history.created_at.to_date %></td>
           <td>
             <% if addition_history.status %>
               許可
@@ -70,6 +76,7 @@
           </td>
           <td></td>
         <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 

@@ -1,15 +1,17 @@
-<h2> 分野名の編集 </h2>
+<h1> 分野名の編集 </h1><br>
 
-<p><%= link_to "分野一覧へ戻る", admins_genres_path %></p>
-<br>
-<%= form_for @genre, url: admins_genre_path do |f| %>
-  <p>
-  <%= f.label :新しい分野名 %><br>
-  <%= f.text_field :genre_name %>
-  </p>
+<div class="navbar navbar-default">
+  <div class= "navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "分野一覧へ", admins_genres_path %></li>
+    </ul>
+  </div>
+</div>
 
-  <p>
-  <%= f.submit :分野名の編集 %>
-  </p>
-
-<% end %>
+<div class="editer_container">
+  <%= form_for @genre, url: admins_genre_path do |f| %>
+    <%= f.label :分野名 %>
+    <%= f.text_field :genre_name %>
+    <%= f.submit :分野名の編集 %>
+  <% end %>
+</div>

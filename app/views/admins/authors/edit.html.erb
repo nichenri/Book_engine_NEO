@@ -1,15 +1,17 @@
-<h2> 著者名の編集 </h2>
+<h1> 著者名の編集 </h1><br>
 
-<p><%= link_to "著者一覧へ戻る", admins_authors_path %></p>
-<br>
-<%= form_for @author, url: admins_author_path do |f| %>
-  <p>
-  <%= f.label :新しい著者名 %><br>
-  <%= f.text_field :author_name %>
-  </p>
+<div class="navbar navbar-default">
+  <div class= "navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "著者一覧へ", admins_authors_path %></li>
+    </ul>
+  </div>
+</div>
 
-  <p>
-  <%= f.submit :著者名の編集 %>
-  </p>
-
-<% end %>
+<div class="editer_container">
+  <%= form_for @author, url: admins_author_path do |f| %>
+    <%= f.label :著者名 %>
+    <%= f.text_field :author_name %>
+    <%= f.submit :著者名の編集 %>
+  <% end %>
+</div>
