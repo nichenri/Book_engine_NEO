@@ -4,12 +4,16 @@
   <div class="navbar-inner">
     <ul class="nav">
       <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
+      <li><%= link_to "貸借り履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸借り/予約状況", users_borrowings_path %></li>
     </ul>
   </div>
 </div>
 
-<h2>詳細情報</h2>
-<div class="container">
+<h2>詳細情報</h2><br>
+<div class="books_container">
   <table class="table table-striped" border="3">
     <tr>
       <td>タイトル</td>
@@ -119,4 +123,3 @@
     <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
   <% end %>
 </ul>
-

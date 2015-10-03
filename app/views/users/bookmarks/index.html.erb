@@ -5,10 +5,15 @@
   <div class="navbar-inner">
     <ul class="nav">
       <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li class="now"><%= link_to "ブックマーク" %></li>
+      <li><%= link_to "貸借り履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸借り/予約状況", users_borrowings_path %></li>
     </ul>
   </div>
 </div>
 
+<h2>ブックマークした図書一覧</h2>
 <div class="container">
   <table class="table table-striped">
     <thead>

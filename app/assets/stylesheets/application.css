@@ -27,7 +27,7 @@ h2 {
   font-size: 25px;
   color: navy;
   font-weight: bold;
-  margin-right: 30px;
+  margin: 0 auto 0 auto;
 }
 
 h3 {
@@ -97,7 +97,12 @@ label {
 
 .container {
   max-width: 80%;
-  margin-left: 0 auto 0 auto;
+  margin: 0 auto 0 auto;
+}
+
+.books_container {
+  max-width: 50%;
+  margin: 0 auto 0 auto;
 }
 
 .editer_container {
@@ -107,3 +112,4 @@ label {
 .editer_button {
   margin-left: 60px;
 }
+
