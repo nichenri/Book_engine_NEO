@@ -81,8 +81,44 @@ label {
   float: left;
 }
 
+.new_user {
+  width: 280px;
+  margin: 0 auto 0 auto;
+}
+
+.login_field > label {
+  margin-right: 10px;
+  width: 114px;
+  float: left;
+}
+
+.login {
+  width: 320px;
+  margin: 0 auto 0 auto;
+  margin-top: 40px;
+  border: groove;
+  padding: 15px;
+  background-color: #D9E5FF;
+  border-radius: 5px;
+}
+
+.admins_login {
+  width: 320px;
+  margin: 0 auto 0 auto;
+  margin-top: 40px;
+  border: groove;
+  padding: 15px;
+  background-color: #DDDDDD;
+  border-radius: 5px;
+}
+
 .search_actions {
   width: 80px;
+  margin: 0 auto 0 auto;
+}
+
+.update_actions {
+  width: 110px;
   margin: 0 auto 0 auto;
 }
 
