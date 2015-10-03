@@ -12,24 +12,32 @@
   </div>
 </div>
 
-<h2>図書検索</h2><br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>図書検索</h2>
+  </div>
 
-<div class="search_field">
-  <%= search_form_for @book_search, url: users_top_index_path do |f| %>
-    <%= f.label :title_cont, "タイトル" %>
-    <%= f.text_field :title_cont %><br><br>
-    <%= f.label :author_author_name_cont, "著者" %>
-    <%= f.text_field :author_author_name_cont %><br><br>
-    <%= f.label :publisher_publisher_name_cont, "出版社" %>
-    <%= f.text_field :publisher_publisher_name_cont %><br><br>
-    <%= f.label :genre_genre_name_cont, "分野" %>
-    <%= f.text_field :genre_genre_name_cont %><br><br>
-    <div class="search_actions"><%= f.submit "Search" %></div>
-  <% end %>
+  <div class="panel-body">
+    <div class="search_field">
+      <%= search_form_for @book_search, url: users_top_index_path do |f| %>
+        <%= f.label :title_cont, "タイトル" %>
+        <%= f.text_field :title_cont %><br><br>
+        <%= f.label :author_author_name_cont, "著者" %>
+        <%= f.text_field :author_author_name_cont %><br><br>
+        <%= f.label :publisher_publisher_name_cont, "出版社" %>
+        <%= f.text_field :publisher_publisher_name_cont %><br><br>
+        <%= f.label :genre_genre_name_cont, "分野" %>
+        <%= f.text_field :genre_genre_name_cont %><br><br>
+        <div class="search_actions"><%= f.submit "Search" %></div>
+      <% end %>
+    </div>
+  </div>
 </div><br>
 
-<div class="container">
-  <table class="table table-striped">
+
+<div class="search_container">
+  <h2>検索結果</h2><br>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>タイトル</th>

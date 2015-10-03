@@ -11,8 +11,8 @@ class Admins::StocksController < AdminsController
           reservation.destroy!
         end
       end
-    end
     redirect_to admins_top_index_path, notice: "#{sprintf("%08d", stock_id)}として登録されました"
+    end
   rescue => e
     p e
     redirect_to :back

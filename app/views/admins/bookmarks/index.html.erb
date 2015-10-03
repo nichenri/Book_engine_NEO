@@ -7,27 +7,42 @@
       <li><%= link_to "図書追加", new_admins_book_path %></li>
       <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
       <li class="now"><%= link_to "ブックマーク"%></li>
-      <li><%= link_to "貸借り履歴", admins_borrowing_histories_path %></li>
-      <li><%= link_to "貸借り/予約状況", admins_borrowings_path %></li>
+      <li><%= link_to "貸出履歴", admins_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", admins_borrowings_path %></li>
     </ul>
   </div>
 </div>
 
-<h2>ブックマークの検索</h2><br>
-<div class="search_field">
-  <%= search_form_for @bookmark_search, url: admins_bookmarks_path do |f| %>
-    <div class="field">
-      <%= f.label :user_name_cont, "ユーザ名" %>
-      <%= f.text_field :user_name_cont %><br>
-      <%= f.label :book_title_cont, "図書名" %>
-      <%= f.text_field :book_title_cont %><br>
-    </div><br>
-    <div class="search_actions"><%= f.submit "Search" %></div>
-  <% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>ブックマークの検索</h2>
+  </div>
+
+  <div class="panel-body">
+    <div class="search_field">
+      <%= search_form_for @bookmark_search, url: admins_bookmarks_path do |f| %>
+        <div class="field">
+          <%= f.label :user_name_cont, "ユーザ名" %>
+          <%= f.text_field :user_name_cont %><br><br>
+          <%= f.label :book_title_cont, "図書名" %>
+          <%= f.text_field :book_title_cont %><br><br>
+          <%= f.label :book_author_author_name_cont, "著者名" %>
+          <%= f.text_field :book_author_author_name_cont %><br><br>
+          <%= f.label :book_publisher_publisher_name_cont, "出版社名" %>
+          <%= f.text_field :book_publisher_publisher_name_cont %><br><br>
+          <%= f.label :book_genre_genre_name_cont, "分野名" %>
+          <%= f.text_field :book_genre_genre_name_cont %>
+        </div><br>
+        <div class="search_actions"><%= f.submit "Search" %></div>
+      <% end %>
+    </div>
+  </div>
 </div><br>
 
 
-<div class="container">
+<div class="search_container">
+  <h2>検索結果</h2><br>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -40,13 +55,14 @@
     </thead>
     <tbody>
       <% @bookmarks.each do |bookmark| %>
-      <tr>
-        <td><%= bookmark.user.name %></td>
-        <td><%= bookmark.book.title %></td>
-        <td><%= bookmark.book.author.author_name %></td>
-        <td><%= bookmark.book.publisher.publisher_name %></td>
-        <td><%= bookmark.book.genre.genre_name %></td>
-      </tr>
+        <tr>
+          <td><%= bookmark.user.name %></td>
+          <td><%= bookmark.book.title %></td>
+          <td><%= bookmark.book.author.author_name %></td>
+          <td><%= bookmark.book.publisher.publisher_name %></td>
+          <td><%= bookmark.book.genre.genre_name %></td>
+        </tr>
     </tbody>
   <% end %>
-</table>
+  </table>
+</div>

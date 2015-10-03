@@ -1,10 +1,13 @@
 class Admins::BorrowingsController < AdminsController
 
   def index 
-    @borrowings = Borrowing.all.includes(:user, stock: [ book: [:author, :publisher, :genre]])
-    @stock_reservations = StockReservation.all.includes(:user, stock: [ book: [:author, :publisher, :genre]])
-    @book_reservations = BookReservation.all.includes(:user, book: [:author, :publisher, :genre])
+    @stock_reservation = StockReservation.new
     @borrowing = Borrowing.new
+    @stock_reservation_search = StockReservation.search(params[:q])
+    @borrowing_search = Borrowing.search(params[:q])
+    @borrowings = @borrowing_search.result.includes(:user, stock: [ book: [:author, :publisher, :genre]])
+    @stock_reservations = @stock_reservation_search.result.includes(:user, stock: [ book: [:author, :publisher, :genre]])
+    @book_reservations = BookReservation.all.includes(:user, book: [:author, :publisher, :genre])
     @borrowing_history = BorrowingHistory.new 
   end
 

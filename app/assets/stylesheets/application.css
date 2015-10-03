@@ -71,7 +71,7 @@ h3 {
 }
 
 .search_field {
-  width: 300px;
+  width: 260px;
   margin: 0 auto 0 auto;
 }
 
@@ -131,14 +131,46 @@ label {
   margin-left: 40px;
 }
 
+.panel {
+  width: 260px;
+  float: left;
+  margin: 15px;
+}
+
 .container {
   max-width: 80%;
   margin: 0 auto 0 auto;
 }
 
+.search_container {
+  width: 780px;
+  float: left;
+  margin-left: 5px;
+}
+
 .books_container {
-  max-width: 50%;
+  max-width: 90%;
   margin: 0 auto 0 auto;
+}
+
+.search_container > .request_container {
+  max-width: 100%;
+}
+
+.book_details_container {
+  width: 620px;
+  float: left;
+}
+
+.reviews {
+  width: 400px;
+  float: left;
+  margin-top: -20px;
+}
+
+.book_users {
+  width: 400px;
+  clear: left;
 }
 
 .editer_container {

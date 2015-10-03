@@ -12,114 +12,116 @@
   </div>
 </div>
 
-<h2>詳細情報</h2><br>
-<div class="books_container">
-  <table class="table table-striped" border="3">
-    <tr>
-      <td>タイトル</td>
-      <td>
-        <strong><%= @book.title %></strong>
-        <% if @user_bookmark %>
-          <%= button_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "ブックマークを取り消しますか?"}, :method => :delete %>
-        <% else %>
-          <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
-            <%= f.submit :ブックマークに入れる %>
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td>著者</td>
-      <td><%= @book.author.author_name %></td>
-    </tr>
-
-    <tr>
-      <td>出版社</td>
-      <td><%= @book.publisher.publisher_name %></td>
-    </tr>
-
-    <tr>
-      <td>分野</td>
-      <td><%= @book.genre.genre_name %></td>
-    </tr>
-
-    <tr>
-      <td>図書館保有状況</td>
-      <td>合計保有数: <%= @stocks.count %><br>
-        <ul>
-          <% @stocks.each do |stock| %>
-            <li>
-              <%= sprintf("%08d", stock.id) %>
-              <%= status(stock) %>
-            </li>
-          <% end %>
-        </ul>
-      </td>
-    </tr>
-
-    <tr>
-      <td>あなたの予約状態</td>
-      <td>
-        <% if @user.stock_borrow(@stocks) %>
-          現在<%= sprintf("%08d", @user.stock_borrow(@stocks).stock_id) %>を貸出中<br>
-          　返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
-      <% else %>
-        <% if @user.stock_reserv(@stocks) %>
-          現在<%= sprintf("%08d", @user.stock_reserv(@stocks).stock_id) %>を取り置き中<br>
-          取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%><br>
-          <%= button_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
-        <% else %>
-          <% if @user.book_reserv(@book) %>
-            現在予約中。取り置き開始については後日連絡いたします。<br>
-            <%= button_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
+<div class="book_details_container">
+  <h2>詳細情報</h2><br>
+  <div class="books_container">
+    <table class="table table-striped" border="3">
+      <tr>
+        <td>タイトル</td>
+        <td>
+          <strong><%= @book.title %></strong>
+          <% if @user_bookmark %>
+            <%= button_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "ブックマークを取り消しますか?"}, :method => :delete %>
           <% else %>
-            <% unless @book.remaining_stocks.first %>
-              <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
-                <%= f.submit :この本を予約する %>
-              <% end %>
+            <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
+              <%= f.submit :ブックマークに入れる %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>著者</td>
+        <td><%= @book.author.author_name %></td>
+      </tr>
+
+      <tr>
+        <td>出版社</td>
+        <td><%= @book.publisher.publisher_name %></td>
+      </tr>
+
+      <tr>
+        <td>分野</td>
+        <td><%= @book.genre.genre_name %></td>
+      </tr>
+
+      <tr>
+        <td>図書館保有状況</td>
+        <td>合計保有数: <%= @stocks.count %><br>
+          <ul>
+            <% @stocks.each do |stock| %>
+              <li>
+                <%= sprintf("%08d", stock.id) %>
+                <%= status(stock) %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>あなたの予約状態</td>
+        <td>
+          <% if @user.stock_borrow(@stocks) %>
+            現在<%= sprintf("%08d", @user.stock_borrow(@stocks).stock_id) %>を貸出中<br>
+            　返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
+        <% else %>
+          <% if @user.stock_reserv(@stocks) %>
+            現在<%= sprintf("%08d", @user.stock_reserv(@stocks).stock_id) %>を取り置き中<br>
+            取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%><br>
+            <%= button_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
+          <% else %>
+            <% if @user.book_reserv(@book) %>
+              現在予約中。取り置き開始については後日連絡いたします。<br>
+              <%= button_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
             <% else %>
-              <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, @book.remaining_stocks.first.id) do |f| %>
-                <%= f.submit :この本を予約する %>
+              <% unless @book.remaining_stocks.first %>
+                <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
+                  <%= f.submit :この本を予約する %>
+                <% end %>
+              <% else %>
+                <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, @book.remaining_stocks.first.id) do |f| %>
+                  <%= f.submit :この本を予約する %>
+                <% end %>
               <% end %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
-      </td>
-    </tr>
-  </table>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div><br>
 
-
-<h2>この本に対するレビュー一覧</h2>
-<ul>
-  <% @book.reviews.each do |review| %>
-    <li>
-      <%= review.user.name %> |
-      <%= review.updated_at %> 
-      <% if review.user_id == @user.id %>
-        <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
-        <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "レビューを本当に削除しますか?"} %>
-      <% end %><br>
-      <%= review.content %>
-    </li>
+<div class="reviews">
+  <h2>この本へのレビュー</h2><br>
+  <ul>
+    <% @book.reviews.each do |review| %>
+      <li>
+        <%= review.user.name %> |
+        <%= review.updated_at %> 
+        <% if review.user_id == @user.id %> | 
+          <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
+          <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "レビューを本当に削除しますか?"} %>
+        <% end %><br>
+        <%= review.content %>
+      </li>
     <% end %>
 
     <li>
       <%= form_for @review, url: users_book_reviews_path(@book.id) do |f| %>
-    <p>
-    <%= f.text_field :content %>
-    </p>
-    <p>
-    <%= f.submit :レビューの投稿 %>
-    </p>
-    <% end %>
-</ul><br>
+        <p>
+        <%= f.text_area :content, :size=>"30*20" %><br>
+        <%= f.submit :レビューの投稿 %>
+        </p>
+      <% end %>
+  </ul>
+  <br><br>
 
-<h2>この本を借りた人一覧</h2>
-<ul>
-  <% @book.borrowing_records.each do |borrowing_record| %>
-    <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
-  <% end %>
-</ul>
+  <h2>この本を借りた人</h2><br>
+  <ul>
+    <% @book.borrowing_records.each do |borrowing_record| %>
+      <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
+    <% end %>
+  </ul>
+</div>
