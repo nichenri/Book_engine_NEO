@@ -1,4 +1,4 @@
-<h1> あなたの貸借り履歴</h1><br>
+<h1> FiNC図書館へようこそ </h1><br>
 
 <div class="navbar navbar-default">
   <div class="navbar-inner">
@@ -6,32 +6,39 @@
       <li><%= link_to "図書検索画面", users_top_index_path %></li>
       <li><%= link_to "図書リクエスト", users_new_books_path %></li>
       <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
-      <li class="now"><%= link_to "貸借り履歴" %></li>
-      <li><%= link_to "貸借り/予約状況", users_borrowings_path %></li>
+      <li class="now"><%= link_to "貸出履歴" %></li>
+      <li><%= link_to "貸出/予約状況", users_borrowings_path %></li>
     </ul>
   </div>
 </div>
 
-<h2>貸借り履歴の検索</h2><br>
-<%= search_form_for @borrowing_history_search, url: users_borrowing_histories_path do |f| %>
-  <div class="search_field">
-    <%= f.label :stock_id_eq, "図書番号" %>
-    <%= f.text_field :stock_id_eq %><br><br>
-    <%= f.label :stock_book_title_cont, "タイトル" %>
-    <%= f.text_field :stock_book_title_cont %><br><br>
-    <%= f.label :stock_book_author_author_name_cont, "著者" %>
-    <%= f.text_field :stock_book_author_author_name_cont %><br><br>
-    <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
-    <%= f.text_field :stock_book_publisher_publisher_name_cont %><br><br>
-    <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
-    <%= f.text_field :stock_book_genre_genre_name_cont %><br>
-  </div><br>
-  <div class="search_actions"><%= f.submit "Search" %></div><br>
-<% end %>
-<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>貸出履歴の検索</h2>
+  </div>
 
-<div class="container">
-  <table class="table table_striped">
+  <div class="panel-body">
+    <div class="search_field">
+      <%= search_form_for @borrowing_history_search, url: users_borrowing_histories_path do |f| %>
+        <%= f.label :stock_id_eq, "図書番号" %>
+        <%= f.text_field :stock_id_eq %><br><br>
+        <%= f.label :stock_book_title_cont, "タイトル" %>
+        <%= f.text_field :stock_book_title_cont %><br><br>
+        <%= f.label :stock_book_author_author_name_cont, "著者" %>
+        <%= f.text_field :stock_book_author_author_name_cont %><br><br>
+        <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
+        <%= f.text_field :stock_book_publisher_publisher_name_cont %><br><br>
+        <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
+        <%= f.text_field :stock_book_genre_genre_name_cont %><br><br>
+        <div class="search_actions"><%= f.submit "Search" %></div><br>
+      <% end %>
+    </div>
+  </div>
+</div><br>
+
+<div class="search_container">
+  <h2>貸出履歴検索結果</h2><br>
+  <table class="table table_striped table-hover">
     <thead>
       <tr>
         <th>貸出し図書番号</th>

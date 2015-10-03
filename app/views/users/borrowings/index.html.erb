@@ -1,4 +1,4 @@
-<h1>あなたの貸借り・予約状況</h1><br>
+<h1> FiNC図書館へようこそ </h1><br>
 
 
 <div class="navbar navbar-default">
@@ -7,14 +7,15 @@
       <li><%= link_to "図書検索画面", users_top_index_path %></li>
       <li><%= link_to "図書リクエスト", users_new_books_path %></li>
       <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
-      <li><%= link_to "貸借り履歴", users_borrowing_histories_path %></li>
-      <li class="now"><%= link_to "貸借り/予約状況" %></li>
+      <li><%= link_to "貸出履歴", users_borrowing_histories_path %></li>
+      <li class="now"><%= link_to "貸出/予約状況" %></li>
     </ul>
   </div>
 </div>
 
+<h2>あなたへの貸出・予約状況</h2><br>
 <div class="container">
-  <table class="table table-striped">
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>タイトル</th>
@@ -66,6 +67,6 @@
       <% end %>
     </tbody>
   </table>
-</div><br><br>
+</div>
 
 
