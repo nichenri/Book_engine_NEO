@@ -55,7 +55,7 @@
       <% @borrowing_histories.each do |history| %>
         <tr>
           <td><%= sprintf("%08d", history.stock_id) %></td>
-          <td><%= history.stock.book.title %></td>
+          <td><%= link_to history.stock.book.title, users_book_path(history.stock.book_id) %></td>
           <td><%= history.stock.book.author.author_name %></td>
           <td><%= history.stock.book.publisher.publisher_name %></td>
           <td><%= history.stock.book.genre.genre_name %></td>

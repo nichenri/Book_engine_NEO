@@ -60,6 +60,12 @@ h3 {
   margin-right: 500px;
 }
 
+.rule {
+  color: gray;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
 .nav > li {
   width: 140px;
   display: inline-block;
@@ -175,6 +181,7 @@ label {
 
 .editer_container {
   margin-left: 30px;
+  width: 400px;
 }
 
 .editer_button {

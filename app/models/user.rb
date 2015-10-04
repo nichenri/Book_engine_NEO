@@ -30,6 +30,11 @@ class User < ActiveRecord::Base
   has_many :reservation_books, through: :book_reservations, :source => 'book'
 
 
+  def stocks_in_use
+    self.borrowings.count + self.stock_reservations.count + self.book_reservations.count
+  end
+
+
   def stock_borrow(stocks)
     self.borrowings.find_by(stock_id: stocks.pluck(:id))
   end

@@ -1,8 +1,14 @@
-<h1> 出版社名の編集 </h1><br>
+<h1>管理者画面</h1><br>
 
 <div class="navbar navbar-default">
   <div class= "navbar-inner">
     <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加", new_admins_book_path %></li>
+      <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
+      <li><%= link_to "ブックマーク", admins_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", admins_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", admins_borrowings_path %></li>
       <li><%= link_to "出版社一覧へ", admins_publishers_path %></li>
     </ul>
   </div>

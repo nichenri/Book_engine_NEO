@@ -13,8 +13,8 @@ class Admins::BorrowingsController < AdminsController
 
   def create
     ActiveRecord::Base.transaction do
+      StockReservation.find(params[:borrowing][:id]).destroy!
       Borrowing.create!(borrowing_params)
-      StockReservation.find_by(params[:borrowing][:id]).destroy!
     end
     redirect_to admins_borrowings_path
   rescue => e

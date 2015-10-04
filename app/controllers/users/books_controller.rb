@@ -10,6 +10,7 @@ class Users::BooksController < UsersController
     @book_reservation = BookReservation.new
     @stock_reservation = StockReservation.new
     @stocks = @book.stocks.includes(:borrowing, :stock_reservation)
+    @all_stocks = Stock.all
   end
 
 

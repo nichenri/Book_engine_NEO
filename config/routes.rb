@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'users/top#index'
+
   namespace :users do
     get 'top/index'
     resources :bookmarks, only: [:index]
@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     :passwords     => "users/passwords"
   }
 
+  root to: "users/top#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

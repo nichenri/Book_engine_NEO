@@ -1,4 +1,4 @@
-<h1>ブックマーク</h1><br>
+<h1>管理者画面</h1><br>
 
 <div class="navbar navbar-default">
   <div class="navbar-inner">
@@ -23,15 +23,15 @@
     <div class="search_field">
       <%= search_form_for @bookmark_search, url: admins_bookmarks_path do |f| %>
         <div class="field">
-          <%= f.label :user_name_cont, "ユーザ名" %>
+          <%= f.label :user_name_cont, "ユーザ" %>
           <%= f.text_field :user_name_cont %><br><br>
-          <%= f.label :book_title_cont, "図書名" %>
+          <%= f.label :book_title_cont, "タイトル" %>
           <%= f.text_field :book_title_cont %><br><br>
-          <%= f.label :book_author_author_name_cont, "著者名" %>
+          <%= f.label :book_author_author_name_cont, "著者" %>
           <%= f.text_field :book_author_author_name_cont %><br><br>
-          <%= f.label :book_publisher_publisher_name_cont, "出版社名" %>
+          <%= f.label :book_publisher_publisher_name_cont, "出版社" %>
           <%= f.text_field :book_publisher_publisher_name_cont %><br><br>
-          <%= f.label :book_genre_genre_name_cont, "分野名" %>
+          <%= f.label :book_genre_genre_name_cont, "分野" %>
           <%= f.text_field :book_genre_genre_name_cont %>
         </div><br>
         <div class="search_actions"><%= f.submit "Search" %></div>
@@ -42,8 +42,8 @@
 
 
 <div class="search_container">
-  <h2>検索結果</h2><br>
-  <table class="table table-striped">
+  <h2>ブックマーク検索結果</h2><br>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>ユーザ</th>
