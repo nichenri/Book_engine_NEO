@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
     self.borrowings.count + self.stock_reservations.count + self.book_reservations.count
   end
 
+  def expired_borrowings
+    self.borrowings.where("return_at < ?", DateTime.now).first
+  end
 
   def stock_borrow(stocks)
     self.borrowings.find_by(stock_id: stocks.pluck(:id))
