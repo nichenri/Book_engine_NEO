@@ -22,7 +22,7 @@ class Admins::BooksController < AdminsController
 
   def update
     if @book.update(book_params) 
-      redirect_to admins_top_index_path(@admin.id), notice: "図書情報を更新しました"
+      redirect_to admins_book_path(@book.id), notice: "図書情報を更新しました"
     end
   end
 

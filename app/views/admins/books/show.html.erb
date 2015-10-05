@@ -47,6 +47,7 @@
             <% @book.stocks.each do |stock| %>
               <li>
                 <%= sprintf("%08d", stock.id) %>
+                <%= link_to "削除", admins_book_stock_path(@book.id, stock.id), :method => :delete, data: {confirm: "この本を本当に削除しますか?"}%>
                 <%= status_for_admins(stock) %>
               </li>
             <% end %>
