@@ -1,113 +1,142 @@
-<h2> 詳細情報 </h2>
+<h1> FiNC図書館へようこそ </h1><br>
 
-<p><%= link_to "図書検索画面へ戻る", users_top_index_path %></p>
-<br>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", users_borrowings_path %></li>
+    </ul>
+  </div>
+</div>
 
-
-<% if @user_bookmark %>
-  <%= button_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "ブックマークを取り消しますか?"}, :method => :delete %>
-<% else %>
-  <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
-    <%= f.submit :ブックマークに入れる %>
-  <% end %>
-<% end %>
-<br>
-
-
-<table rules="all" border="3">
-  <tr>
-    <td>タイトル</td>
-    <td><strong><%= @book.title %></strong></td>
-  </tr>
-
-  <tr>
-    <td>著者</td>
-    <td><%= @book.author.author_name %></td>
-  </tr>
-
-  <tr>
-    <td>出版社</td>
-    <td><%= @book.publisher.publisher_name %></td>
-  </tr>
-
-  <tr>
-    <td>分野</td>
-    <td><%= @book.genre.genre_name %></td>
-  </tr>
-
-  <tr>
-    <td>図書館保有状況</td>
-    <td>合計保有数: <%= @stocks.count %><br>
-      <ul>
-        <% @stocks.each do |stock| %>
-          <li>
-            <%= sprintf("%08d", stock.id) %>
-            <%= status(stock) %>
+<div class="book_details_container">
+  <p class="rule">
+  お客様お一人様あたり、貸出・予約・取り置きまとめて5冊までとさせていただきます。<br>
+  5冊超えますと次の予約ができなくなるのでご了承ください。<br>
+  また、返却期限を過ぎてしまっている場合も同様です。</p><br>
+  <h2>詳細情報</h2><br>
+  <div class="books_container">
+    <table class="table table-striped" border="3">
+      <tr>
+        <td>タイトル</td>
+        <td>
+          <strong><%= @book.title %></strong>
+          <% if @user_bookmark %>
+            <span class="label label-warning">bookmark</span>
+            <%= button_to "ブックマークの取り消し", users_book_bookmark_path(@user_bookmark.book_id, @user_bookmark.id), method: :delete, data: {confirm: "ブックマークを取り消しますか?"}, :method => :delete %>
+          <% else %>
+            <%= form_for @bookmark, url: users_book_bookmarks_path(@book.id) do |f| %>
+              <%= f.submit :ブックマークに入れる %>
+            <% end %>
           <% end %>
-          </li>
+        </td>
+      </tr>
 
-          <br>
+      <tr>
+        <td>著者</td>
+        <td><%= @book.author.author_name %></td>
+      </tr>
 
+      <tr>
+        <td>出版社</td>
+        <td><%= @book.publisher.publisher_name %></td>
+      </tr>
+
+      <tr>
+        <td>分野</td>
+        <td><%= @book.genre.genre_name %></td>
+      </tr>
+
+      <tr>
+        <td>図書館保有状況</td>
+        <td>合計保有数: <%= @stocks.count %><br>
+          <ul>
+            <% @stocks.each do |stock| %>
+              <li>
+                <%= sprintf("%08d", stock.id) %>
+                <%= status(stock) %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td>あなたの予約状態</td>
+        <td>
           <% if @user.stock_borrow(@stocks) %>
             現在<%= sprintf("%08d", @user.stock_borrow(@stocks).stock_id) %>を貸出中<br>
-          　返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
+            　返却期限:<%= @user.stock_borrow(@stocks).return_at.to_date %>
+        <% else %>
+          <% if @user.stock_reserv(@stocks) %>
+            現在<%= sprintf("%08d", @user.stock_reserv(@stocks).stock_id) %>を取り置き中<br>
+            取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%><br>
+            <%= button_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
           <% else %>
-            <% if @user.stock_reserv(@stocks) %>
-              現在<%= sprintf("%08d", @user.stock_reserv(@stocks).stock_id) %>を取り置き中<br>
-              取り置き有効期限:<%= @user.stock_reserv(@stocks).invalid_at.to_date%><br>
-              <%= button_to "予約取り消し", users_book_stock_stock_reservation_path(@book.id, @user.stock_reserv(@stocks).stock_id, @user.stock_reserv(@stocks).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
+            <% if @user.book_reserv(@book) %>
+              現在予約中。取り置き開始については後日連絡いたします。<br>
+              <%= button_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
             <% else %>
-              <% if @user.book_reserv(@book) %>
-                現在予約中です。後日また連絡いたします。<br>
-                <%= button_to "予約取り消し", users_book_book_reservation_path(@book.id, @user.book_reserv(@book).id), method: :delete, data: {confirm: "Are you sure??"}, :method => :delete %>
+              <% if @user.expired_borrowings %>
+                返却期限切れの図書がございます。<br>
+                返却できない場合、次の図書の貸出、予約がともにできなくなってしまうので、ご了承ください。
               <% else %>
-                <% unless @book.remaining_stocks.first %>
-                  <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
-                    <%= f.submit :この本を予約する %>
-                  <% end %>
+                <% if  @user.stocks_in_use >= 5 %>
+                  現在貸出・予約・取り置き合わせて5冊となっております。<br>
+                  予約・取り置きを取り消すか、図書を返却すれば新たな予約が可能になります。
                 <% else %>
-                  <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, @book.remaining_stocks.first.id) do |f| %>
-                    <%= f.submit :この本を予約する %>
+                  <% unless @book.remaining_stocks.first %>
+                    <%= form_for @book_reservation, url: users_book_book_reservations_path(@book.id) do |f| %>
+                      <%= f.submit :この本を予約する %>
+                    <% end %>
+                  <% else %>
+                    <%= form_for @stock_reservation, url: users_book_stock_stock_reservations_path(@book.id, @book.remaining_stocks.first.id) do |f| %>
+                      <%= f.submit :この本を予約する %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             <% end %>
           <% end %>
-      </ul>
-    </td>
-  </tr>
-</table>
+        <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div><br>
 
-
-<h3>この本に対するレビュー一覧</h3>
-<ul>
-  <% @book.reviews.each do |review| %>
-    <li>
-      <%= review.user.name %> |
-      <%= review.updated_at %> 
-      <% if review.user_id == @user.id %>
-        <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
-        <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "レビューを本当に削除しますか?"} %>
-      <% end %><br>
-      <%= review.content %>
-    </li>
+<div class="reviews">
+  <h2>この本へのレビュー</h2><br>
+  <ul>
+    <% @book.reviews.each do |review| %>
+      <li>
+        <%= review.user.name %> |
+        <%= review.updated_at %> 
+        <% if review.user_id == @user.id %> | 
+          <%= link_to "編集", edit_users_book_review_path(review.book_id, review.id) %>
+          <%= link_to "削除", users_book_review_path(review.book_id, review.id), method: :delete, data: {confirm: "レビューを本当に削除しますか?"} %>
+        <% end %><br>
+        <%= review.content %>
+      </li>
     <% end %>
 
     <li>
       <%= form_for @review, url: users_book_reviews_path(@book.id) do |f| %>
-    <p>
-    <%= f.text_field :content %>
-    </p>
-    <p>
-    <%= f.submit :レビューの投稿 %>
-    </p>
+        <p>
+        <%= f.text_area :content, :size=>"30*20" %><br>
+        <%= f.submit :レビューの投稿 %>
+        </p>
+      <% end %>
+  </ul>
+  <br><br>
+
+  <h2>この本を借りた人</h2><br>
+  <ul>
+    <% @book.borrowing_records.each do |borrowing_record| %>
+      <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
     <% end %>
-</ul>
-
-<h3>この本を借りた人一覧</h3>
-<ul>
-  <% @book.borrowing_records.each do |borrowing_record| %>
-    <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
-  <% end %>
-</ul>
-
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+<h1>FiNC図書館へようこそ</h1><br>
+
+
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li class="now"><%= link_to "ブックマーク" %></li>
+      <li><%= link_to "貸出履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", users_borrowings_path %></li>
+    </ul>
+  </div>
+</div>
+
+<h2>ブックマークした図書一覧</h2><br>
+<div class="container">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>分野</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bookmarks.each do |bookmark| %>
+        <tr>
+          <td><%= link_to bookmark.book.title, users_book_path(bookmark.book_id) %> </td>
+          <td><%= bookmark.book.author.author_name %></td>
+          <td><%= bookmark.book.publisher.publisher_name %></td>
+          <td><%= bookmark.book.genre.genre_name %></td>
+        </tr>
+    </tbody>
+  <% end %>
+  </table>
+</div>

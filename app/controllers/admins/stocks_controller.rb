@@ -11,16 +11,17 @@ class Admins::StocksController < AdminsController
           reservation.destroy!
         end
       end
-    end
     redirect_to admins_top_index_path, notice: "#{sprintf("%08d", stock_id)}として登録されました"
+    end
   rescue => e
     p e
     redirect_to :back
   end
 
   def destroy
+    @book = Book.find(params[:book_id])
     Stock.find(params[:id]).destroy
-    redirect_to admins_top_index_path
+    redirect_to admins_book_path(@book.id), notice: "#{sprintf("%08d", params[:id])}が削除されました"
   end
 
 

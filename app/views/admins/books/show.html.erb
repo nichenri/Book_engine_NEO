@@ -1,54 +1,80 @@
-<h2> 詳細情報 </h2>
+<h1> 管理者画面 </h1><br>
 
-<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
-<p><%= link_to "この図書情報の編集", edit_admins_book_path(@book.id)%></p>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加", new_admins_book_path %></li>
+      <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
+      <li><%= link_to "ブックマーク", admins_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", admins_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", admins_borrowings_path %></li>
+    </ul>
+  </div>
+</div>
 
-<br>
+<div class="book_details_container">
+  <h2>詳細情報</h2><br>
+  <div class="books_container">
+    <table class="table table-striped" border="3">
+      <tr>
+        <td>タイトル</td>
+        <td>
+          <strong><%= @book.title %></strong>
+          <%= button_to "図書情報の編集", edit_admins_book_path(@book.id), :method => :get %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>著者</td>
+        <td><%= @book.author.author_name %></td>
+      </tr>
+
+      <tr>
+        <td>出版社</td>
+        <td><%= @book.publisher.publisher_name %></td>
+      </tr>
+
+      <tr>
+        <td>分野</td>
+        <td><%= @book.genre.genre_name %></td>
+      </tr>
+
+      <tr>
+        <td>図書館保有状況</td>
+        <td>合計保有数: <%= @book.stocks.count %><br>
+          <ul>
+            <% @book.stocks.each do |stock| %>
+              <li>
+                <%= sprintf("%08d", stock.id) %>
+                <%= link_to "削除", admins_book_stock_path(@book.id, stock.id), :method => :delete, data: {confirm: "この本を本当に削除しますか?"}%>
+                <%= status_for_admins(stock) %>
+              </li>
+            <% end %>
+          </ul></td>
+      </tr>
+    </table>
+  </div>
+</div><br>
 
 
-<table rules="all" border="3">
-  <tr>
-    <td>タイトル</td>
-    <td><strong><%= @book.title %></strong></td>
-  </tr>
+<div class="reviews">
+  <h2>この本へのレビュー</h2><br>
+  <ul>
+    <% @reviews.each do |review| %>
+      <li>
+        <%= review.user.name %> |
+        <%= review.updated_at %><br>
+        <%= review.content %>
+      </li>
+    <% end %>
+  </ul><br><br>
 
-  <tr>
-    <td>著者</td>
-    <td><%= @book.author.author_name %></td>
-  </tr>
+  <h2>この本を借りた人</h2><br>
+  <ul>
+    <% @book.borrowing_records.each do |borrowing_record| %>
+      <li><%= borrowing_record.user.name %> | <%= borrowing_record.borrowed_at.to_date %></li>
+    <% end %>
+  </ul>
 
-  <tr>
-    <td>出版社</td>
-    <td><%= @book.publisher.publisher_name %></td>
-  </tr>
-
-  <tr>
-    <td>分野</td>
-    <td><%= @book.genre.genre_name %></td>
-  </tr>
-
-  <tr>
-    <td>図書館保有状況</td>
-    <td>合計保有数: <%= @book.stocks.count %><br>
-    <ul>
-      <% @book.stocks.each do |stock| %>
-        <li>
-          <%= sprintf("%08d", stock.id) %>
-          <%= status_for_admins(stock) %>
-        </li>
-      <% end %>
-    </ul></td>
-  </tr>
-</table>
-
-<h3>この本に対するレビュー一覧</h3>
-<ul>
-  <% @reviews.each do |review| %>
-    <li>
-      <%= review.user.name %> |
-      <%= review.updated_at %><br>
-      <%= review.content %>
-    </li>
-  <% end %>
-</ul>
-
+</div>

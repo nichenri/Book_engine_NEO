@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  root 'users/top#index'
+
   namespace :users do
     get 'top/index'
+    resources :bookmarks, only: [:index]
+    resources :borrowings
     resources :borrowing_histories, only: [:index]
     resources :additions, only: [:destroy, :create]  
     resources :books, only: [:show] do
@@ -10,7 +12,6 @@ Rails.application.routes.draw do
       resources :bookmarks, only: [:create, :destroy]
       resources :stocks, only: [:show] do
         resources :stock_reservations
-        resources :borrowings
         resources :borrowing_histories, except: [:index]
       end
     end
@@ -49,6 +50,7 @@ Rails.application.routes.draw do
     :passwords     => "users/passwords"
   }
 
+  root to: "users/top#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

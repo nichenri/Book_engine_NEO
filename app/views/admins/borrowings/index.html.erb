@@ -1,8 +1,47 @@
-<h2>図書貸借り・予約状況一覧</h2>
-<p><%= link_to "図書検索画面へ", admins_top_index_path %></p>
+<h1>管理者画面</h1><br>
 
-<h3>図書貸借り状況</h3>
-<table rules="all">
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加", new_admins_book_path %></li>
+      <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
+      <li><%= link_to "ブックマーク", admins_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", admins_borrowing_histories_path %></li>
+      <li class="now"><%= link_to "貸出/予約状況" %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>図書検索</h2>
+  </div>
+
+  <div class="panel-body">
+    <div class="search_field">
+      <%= search_form_for ([@stock_reservation_search, @borrowing_search]), url: admins_borrowings_path do |f| %>
+        <%= f.label :user_name_cont, "ユーザ" %>
+        <%= f.text_field :user_name_cont %><br><br>
+        <%= f.label :stock_book_title_cont, "タイトル" %>
+        <%= f.text_field :stock_book_title_cont %><br><br>
+        <%= f.label :stock_book_author_author_name_cont, "著者" %>
+        <%= f.text_field :stock_book_author_author_name_cont %><br><br>
+        <%= f.label :stock_id_eq, "図書番号" %>
+        <%= f.text_field :stock_id_eq %><br><br>
+        <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
+        <%= f.text_field :stock_book_publisher_publisher_name_cont %><br><br>
+        <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
+        <%= f.text_field :stock_book_genre_genre_name_cont %><br><br>
+        <div class="search_actions"><%= f.submit "Search" %></div>
+      <% end %>
+    </div>
+  </div>
+</div><br>
+
+<div class="search_container">
+  <h2>図書貸出状況</h2><br>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>ユーザ名</th>
@@ -11,37 +50,39 @@
         <th>著者</th>
         <th>出版社</th>
         <th>分野</th>
+        <th>貸出日</th>
         <th>返却期限</th>
-        <th>状態変更</th>
+        <th>返却</th>
       </tr>
     </thead>
     <tbody>
       <% @borrowings.each do |borrowing| %>
-      <tr>
-        <td><%= borrowing.user.name %> </td>
-        <td><%= sprintf("%08d", borrowing.stock.id) %></td>
-        <td><%= borrowing.stock.book.title %></td>
-        <td><%= borrowing.stock.book.author.author_name %> </td>
-        <td><%= borrowing.stock.book.publisher.publisher_name %> </td>
-        <td><%= borrowing.stock.book.genre.genre_name %></td>
-        <td><%= borrowing.return_at.to_date%></td>
-        <td>
-          <%= form_for @borrowing_history, url: admins_borrowing_histories_path do |f| %>
-            <%= f.hidden_field :id, :value => borrowing.id %>
-            <%= f.hidden_field :user_id, :value => borrowing.user_id %>
-            <%= f.hidden_field :stock_id, :value => borrowing.stock_id %>
-            <%= f.hidden_field :borrowed_at, :value => borrowing.created_at %>
-            <%= f.submit :返却 %>
-          <% end %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= borrowing.user.name %> </td>
+          <td><%= sprintf("%08d", borrowing.stock.id) %></td>
+          <td><%= link_to  borrowing.stock.book.title, admins_book_path(borrowing.stock.book_id) %></td>
+          <td><%= borrowing.stock.book.author.author_name %> </td>
+          <td><%= borrowing.stock.book.publisher.publisher_name %> </td>
+          <td><%= borrowing.stock.book.genre.genre_name %></td>
+          <td><%= borrowing.created_at.to_date %></td>
+          <td><%= borrowing.return_at.to_date%></td>
+          <td>
+            <%= form_for @borrowing_history, url: admins_borrowing_histories_path do |f| %>
+              <%= f.hidden_field :id, :value => borrowing.id %>
+              <%= f.hidden_field :user_id, :value => borrowing.user_id %>
+              <%= f.hidden_field :stock_id, :value => borrowing.stock_id %>
+              <%= f.hidden_field :borrowed_at, :value => borrowing.created_at %>
+              <%= f.submit :返却 %>
+            <% end %>
+          </td>
+        </tr>
     </tbody>
   <% end %>
-</table>
+  </table><br><br>
 
 
-<h3>図書取り置き状況</h3>
-<table rules="all">
+  <h2>図書取り置き状況</h2><br>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>ユーザ名</th>
@@ -56,30 +97,31 @@
     </thead>
     <tbody>
       <% @stock_reservations.each do |stock_reservation| %>
-      <tr>
-        <td><%= stock_reservation.user.name %> </td>
-        <td><%= sprintf("%08d", stock_reservation.stock.id) %></td>
-        <td><%= stock_reservation.stock.book.title %></td>
-        <td><%= stock_reservation.stock.book.author.author_name %> </td>
-        <td><%= stock_reservation.stock.book.publisher.publisher_name %> </td>
-        <td><%= stock_reservation.stock.book.genre.genre_name %></td>
-        <td><%= stock_reservation.invalid_at.to_date %></td>
-        <td>
-          <%= form_for @borrowing, url: admins_borrowings_path do |f| %>
-            <%= f.hidden_field :id, :value => stock_reservation.id %>
-            <%= f.hidden_field :user_id, :value => stock_reservation.user_id %>
-            <%= f.hidden_field :stock_id, :value => stock_reservation.stock_id %>
-            <%= f.submit :貸出する%>
-          <% end %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= stock_reservation.user.name %> </td>
+          <td><%= sprintf("%08d", stock_reservation.stock.id) %></td>
+          <td><%= link_to stock_reservation.stock.book.title, admins_book_path(stock_reservation.stock.book_id) %></td>
+          <td><%= stock_reservation.stock.book.author.author_name %> </td>
+          <td><%= stock_reservation.stock.book.publisher.publisher_name %> </td>
+          <td><%= stock_reservation.stock.book.genre.genre_name %></td>
+          <td><%= stock_reservation.invalid_at.to_date %></td>
+          <td>
+            <%= form_for @borrowing, url: admins_borrowings_path do |f| %>
+              <%= f.hidden_field :id, :value => stock_reservation.id %>
+              <%= f.hidden_field :user_id, :value => stock_reservation.user_id %>
+              <%= f.hidden_field :stock_id, :value => stock_reservation.stock_id %>
+              <%= f.submit :貸出する%>
+            <% end %>
+          </td>
+        </tr>
     </tbody>
   <% end %>
-</table>
+  </table>
+  <br><br>
 
 
-<h3>図書予約状況</h3>
-<table rules="all">
+  <h2>図書予約状況</h2><br>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <th>ユーザ名</th>
@@ -92,18 +134,18 @@
     </thead>
     <tbody>
       <% @book_reservations.each do |book_reservation| %>
-      <tr>
-        <td><%= book_reservation.user.name %> </td>
-        <td><%= book_reservation.book.title %></td>
-        <td><%= book_reservation.book.author.author_name %> </td>
-        <td><%= book_reservation.book.publisher.publisher_name %> </td>
-        <td><%= book_reservation.book.genre.genre_name %></td>
-        <td><%= book_reservation.created_at %></td>
-      </tr>
+        <tr>
+          <td><%= book_reservation.user.name %> </td>
+          <td><%= link_to book_reservation.book.title, admins_book_path(book_reservation.book_id) %></td>
+          <td><%= book_reservation.book.author.author_name %> </td>
+          <td><%= book_reservation.book.publisher.publisher_name %> </td>
+          <td><%= book_reservation.book.genre.genre_name %></td>
+          <td><%= book_reservation.created_at %></td>
+        </tr>
     </tbody>
   <% end %>
-</table>
-
+  </table>
+</div>
 
 
 

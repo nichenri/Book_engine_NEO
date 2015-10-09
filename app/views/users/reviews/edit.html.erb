@@ -1,15 +1,25 @@
-<h1> レビューの編集 </h1>
+<h1> FiNC図書館へようこそ </h1><br>
 
-<p><%= link_to "本の詳細へ戻る", users_book_path(@book.id) %></p>
-<br>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li><%= link_to "図書リクエスト", users_new_books_path %></li>
+      <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", users_borrowings_path %></li>
+      <li><%= link_to "戻る", :back %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="editer_container">
+<h2>レビューの更新</h2><br>
 <%= form_for @review, :url => users_book_review_path do |f| %>
   <p>
-  <%= f.label :レビューを更新してください %><br>
-  <%= f.text_area :content %>
+  <%= f.label :レビュー %>
+  <%= f.text_area :content, :size=>"30*20" %>
+  <%= f.submit :更新 %>
   </p>
-
-  <p>
-  <%= f.submit :レビューの編集 %>
-  </p>
-
 <% end %>
+</div>

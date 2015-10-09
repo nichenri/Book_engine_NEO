@@ -2,6 +2,11 @@ class Users::BookmarksController < UsersController
   before_action :set_book, only: [:create, :destroy]
 
 
+  def index
+    @user = current_user
+    @bookmarks = Bookmark.where(user_id: @user.id).includes(book: [:author, :publisher, :genre])
+  end
+
   def create
     @book.bookmarks.create(user_id: current_user.id)
     redirect_to users_book_path(@book.id), notice: "ブックマークに追加しました"

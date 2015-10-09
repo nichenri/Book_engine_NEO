@@ -1,55 +1,75 @@
-<h2> 貸借り履歴</h2>
+<h1> 管理者画面</h1><br>
 
-<p><%= link_to "図書検索画面へ戻る", admins_top_index_path %></p>
-
-<br>
-
-<%= search_form_for @borrowing_history_search, url: admins_borrowing_histories_path do |f| %>
-  <div class="field">
-    <%= f.label :user_name_cont, "ユーザ" %>
-    <%= f.text_field :user_name_eq %><br>
-    <%= f.label :stock_book_title_cont, "タイトル" %>
-    <%= f.text_field :stock_book_title_cont %><br>
-    <%= f.label :stock_id_eq, "貸出図書番号" %>
-    <%= f.text_field :stock_id_eq %><br>
-    <%= f.label :stock_book_author_author_name_cont, "著者" %>
-    <%= f.text_field :stock_book_author_author_name_cont %><br>
-    <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
-    <%= f.text_field :stock_book_publisher_publisher_name_cont %><br>
-    <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
-    <%= f.text_field :stock_book_genre_genre_name_cont %><br>
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", admins_top_index_path %></li>
+      <li><%= link_to "図書追加", new_admins_book_path %></li>
+      <li><%= link_to "図書リクエスト", admins_new_books_path %></li>
+      <li><%= link_to "ブックマーク", admins_bookmarks_path %></li>
+      <li class="now"><%= link_to "貸出履歴" %></li>
+      <li><%= link_to "貸出/予約状況", admins_borrowings_path %></li>
+    </ul>
   </div>
-  <div class="actions"><%= f.submit "Search" %></div>
-<% end %>
+</div>
 
-<br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>貸出履歴の検索</h2>
+  </div>
 
-<table rules="all">
-  <thead>
-    <tr>
-      <th>ユーザ</th>
-      <th>貸出し図書番号</th>
-      <th>タイトル</th>
-      <th>著者</th>
-      <th>出版社</th>
-      <th>分野</th>
-      <th>貸出日</th>
-      <th>返却日</th>
-    </tr>
-  </thead>
+  <div class="panel-body">
+    <div class="search_field">
+      <%= search_form_for @borrowing_history_search, url: admins_borrowing_histories_path do |f| %>
+        <div class="field">
+          <%= f.label :user_name_cont, "ユーザ" %>
+          <%= f.text_field :user_name_eq %><br><br>
+          <%= f.label :stock_book_title_cont, "タイトル" %>
+          <%= f.text_field :stock_book_title_cont %><br><br>
+          <%= f.label :stock_id_eq, "図書番号" %>
+          <%= f.text_field :stock_id_eq %><br><br>
+          <%= f.label :stock_book_author_author_name_cont, "著者" %>
+          <%= f.text_field :stock_book_author_author_name_cont %><br><br>
+          <%= f.label :stock_book_publisher_publisher_name_cont, "出版社" %>
+          <%= f.text_field :stock_book_publisher_publisher_name_cont %><br><br>
+          <%= f.label :stock_book_genre_genre_name_cont, "分野" %>
+          <%= f.text_field :stock_book_genre_genre_name_cont %><br>
+        </div><br>
+        <div class="search_actions"><%= f.submit "Search" %></div>
+      <% end %>
+    </div>
+  </div>
+</div><br>
 
-  <tbody>
-    <% @borrowing_histories.each do |history| %>
+<div class="search_container">
+  <h2>検索結果</h2><br>
+  <table class="table table-striped table-hover">
+    <thead>
       <tr>
-        <td><%= history.user.name %></td>
-        <td><%= sprintf("%08d", history.stock_id) %></td>
-        <td><%= history.stock.book.title %></td>
-        <td><%= history.stock.book.author.author_name %></td>
-        <td><%= history.stock.book.publisher.publisher_name %></td>
-        <td><%= history.stock.book.genre.genre_name %></td>
-        <td><%= history.borrowed_at.to_date %></td>
-        <td><%= history.created_at.to_date %></td>
-    <% end %>
-    </tr>
-  </tbody>
+        <th>ユーザ</th>
+        <th>貸出し図書番号</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
+        <th>分野</th>
+        <th>貸出日</th>
+        <th>返却日</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      <% @borrowing_histories.each do |history| %>
+        <tr>
+          <td><%= history.user.name %></td>
+          <td><%= sprintf("%08d", history.stock_id) %></td>
+          <td><%= link_to history.stock.book.title, admins_book_path(history.stock.book_id) %></td>
+          <td><%= history.stock.book.author.author_name %></td>
+          <td><%= history.stock.book.publisher.publisher_name %></td>
+          <td><%= history.stock.book.genre.genre_name %></td>
+          <td><%= history.borrowed_at.to_date %></td>
+          <td><%= history.created_at.to_date %></td>
+        <% end %>
+        </tr>
+    </tbody>
+  </table>
+</div>

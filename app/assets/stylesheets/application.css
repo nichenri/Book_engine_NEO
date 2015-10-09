@@ -13,3 +13,178 @@
  *= require_tree .
  *= require_self
  */
+
+h1 {
+  text-align: left;
+  font-size: 33px;
+  font-weight: bold;
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 25px;
+  color: navy;
+  font-weight: bold;
+  margin: 0 auto 0 auto;
+}
+
+h3 {
+  text-align: left;
+  font-size: 20px;
+  color: navy;
+  font-weight: bold;
+  margin-left: 60px;
+}
+
+.btn-group {
+  background: silver;
+}
+
+.btn {
+  background: silver;
+  color: rgb(66, 139, 202);
+  font-weight: bold;
+  height: 40px;
+}
+
+.now {
+  background: silver;
+  font-weight: bold;
+}
+
+.notice {
+  color: gray;
+  margin-left: 10px;
+  margin-right: 500px;
+}
+
+.rule {
+  color: gray;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.nav > li {
+  width: 140px;
+  display: inline-block;
+  text-align: center;
+}
+
+.navbar {
+  min-height: 30px;
+}
+
+.search_field {
+  width: 260px;
+  margin: 0 auto 0 auto;
+}
+
+label {
+  margin-right: 10px;
+  width: 60px;
+  float: left;
+}
+
+.new_user {
+  width: 280px;
+  margin: 0 auto 0 auto;
+}
+
+.login_field > label {
+  margin-right: 10px;
+  width: 114px;
+  float: left;
+}
+
+.login {
+  width: 320px;
+  margin: 0 auto 0 auto;
+  margin-top: 40px;
+  border: groove;
+  padding: 15px;
+  background-color: #D9E5FF;
+  border-radius: 5px;
+}
+
+.admins_login {
+  width: 320px;
+  margin: 0 auto 0 auto;
+  margin-top: 40px;
+  border: groove;
+  padding: 15px;
+  background-color: #DDDDDD;
+  border-radius: 5px;
+}
+
+.search_actions {
+  width: 80px;
+  margin: 0 auto 0 auto;
+}
+
+.update_actions {
+  width: 110px;
+  margin: 0 auto 0 auto;
+}
+
+.nature_create {
+  margin-left: 48px;
+}
+
+.nature_container {
+  max-width: 50%;
+  margin-left: 40px;
+}
+
+.panel {
+  width: 260px;
+  float: left;
+  margin: 15px;
+}
+
+.container {
+  max-width: 80%;
+  margin: 0 auto 0 auto;
+}
+
+.search_container {
+  width: 780px;
+  float: left;
+  margin-left: 5px;
+}
+
+.books_container {
+  max-width: 90%;
+  margin: 0 auto 0 auto;
+}
+
+.search_container > .request_container {
+  max-width: 100%;
+}
+
+.book_details_container {
+  width: 620px;
+  float: left;
+}
+
+.reviews {
+  width: 400px;
+  float: left;
+  margin-top: -20px;
+}
+
+.book_users {
+  width: 400px;
+  clear: left;
+}
+
+.editer_container {
+  margin-left: 30px;
+  width: 400px;
+}
+
+.editer_button {
+  margin-left: 60px;
+}
+

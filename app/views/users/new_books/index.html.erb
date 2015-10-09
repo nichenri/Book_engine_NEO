@@ -1,42 +1,59 @@
-<h1>新規図書購入申請一覧</h1>
+<h1> FiNC図書館へようこそ </h1><br>
 
+<div class="navbar navbar-default">
+  <div class="navbar-inner">
+    <ul class="nav">
+      <li><%= link_to "図書検索画面", users_top_index_path %></li>
+      <li class="now"><%= link_to "図書リクエスト" %></li>
+      <li><%= link_to "ブックマーク", users_bookmarks_path %></li>
+      <li><%= link_to "貸出履歴", users_borrowing_histories_path %></li>
+      <li><%= link_to "貸出/予約状況", users_borrowings_path %></li>
+    </ul>
+  </div>
+</div>
 
-<p><%= link_to "図書検索画面へ", users_top_index_path %></p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>リクエストフォーム</h2>
+  </div>
 
-<h3> 新規図書購入希望申し込みフォーム </h3>
+  <div class="panel-body">
+    <div class="search_field">
+      <%= form_for @new_book, url: users_new_books_path do |f| %>
+        <p>
+        <%= f.label :タイトル %>
+        <%= f.text_field :title %>
+        </p>
 
-<%= form_for @new_book, url: users_new_books_path do |f| %>
-  <p>
-    <%= f.label :欲しい本のタイトル %><br>
-    <%= f.text_field :title %>
-  </p>
+        <p>
+        <%= f.label :著者 %>
+        <%= f.text_field :author %>
+        </p>
 
-  <p>
-    <%= f.label :欲しい本の著者 %><br>
-    <%= f.text_field :author %>
-  </p>
+        <p>
+        <%= f.label :出版社 %>
+        <%= f.text_field :publisher %>
+        </p>
 
-  <p>
-    <%= f.label :欲しい本の出版社 %><br>
-    <%= f.text_field :publisher %>
-  </p>
+        <div class="search_actions">
+          <%= f.submit :送信 %>
+        </div>
 
-  <p>
-    <%= f.submit :本の追加 %>
-  </p>
-  <%= f.fields_for @new_book.additions do |df| %>
-  <% end %>
-<% end %>
+        <%= f.fields_for @new_book.additions do |df| %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div><br>
 
-
-<h3>あなたの出した新規図書購入申請</h3>
-
-<table rules="all">
+<h2>新規図書購入リクエスト履歴</h2><br>
+<div class="search_container">
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
-        <th>申請書タイトル</th>
-        <th>申請書著者</th>
-        <th>申請書出版社</th>
+        <th>タイトル</th>
+        <th>著者</th>
+        <th>出版社</th>
         <th>申請日</th>
         <th>現在の状態</th>
         <th>申し込みの取り消し</th>
@@ -49,7 +66,7 @@
           <td><%= addition.new_book.title %></td>
           <td><%= addition.new_book.author %> </td>
           <td><%= addition.new_book.publisher %> </td>
-          <td><%= addition.created_at %></td>
+          <td><%= addition.created_at.to_date %></td>
           <td>現在承認中</td>
           <td><%= link_to "図書購入申請の取り消し", users_addition_path(addition.id), method: :delete, data: {confirm: "申し込みを取り消しますか?"} %></td>
         </tr>
@@ -60,7 +77,7 @@
           <td><%= addition_history.new_book.title %></td>
           <td><%= addition_history.new_book.author %> </td>
           <td><%= addition_history.new_book.publisher %> </td>
-          <td><%= addition_history.created_at %></td>
+          <td><%= addition_history.created_at.to_date %></td>
           <td>
             <% if addition_history.status %>
               許可
@@ -70,6 +87,7 @@
           </td>
           <td></td>
         <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
