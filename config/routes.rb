@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount API::Base => '/'
+
   namespace :users do
     get 'top/index'
     resources :bookmarks, only: [:index]

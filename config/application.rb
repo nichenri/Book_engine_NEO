@@ -26,6 +26,12 @@ module BooksEngine
     config.active_record.raise_in_transactional_callbacks = true
   end
 
+  module GrapeApp
+    class Application < Rails::Application
+      config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+      config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+    end
+  end
 
   config.generators do |g|
     g.test_framework :rspec,

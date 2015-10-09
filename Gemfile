@@ -13,6 +13,7 @@ group :test do
   gem "selenium-webdriver", "~> 2.43.0"
 end
 
+gem 'grape'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'ransack'
